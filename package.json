@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "$(npm bin)/truffle test",
+    "compile": "$(npm bin)/truffle compile",
+    "migrate": "$(npm bin)/truffle migrate"
   },
   "repository": {
     "type": "git",
     "url": "https://gitlab.pixelplex.by/611_blockcerts/ico-smart-contracts.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "truffle": "^4.0.3"
+  }
 }

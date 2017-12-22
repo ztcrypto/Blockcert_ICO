@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bignumber.js": "^5.0.0",
     "truffle": "^4.0.3"
   }
 }

@@ -1,99 +1,104 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.16;
 
 
 import './Owned.sol';
-import './SafeMath.sol';
+import './interfaces/IERC20Token.sol';
 
-contract CrowdSale is Owned {
+// TODO remove before deploy!!!
+import "./Debug.sol";
 
-    // crowdsale start date
-    uint public startDate = now;
-    // crowdsale end date
-    uint public endDate = now + 600;
+contract CrowdSale is Owned
+, Debug
+{
 
-    // amount of wei we need to reach
-    uint public capInWei;
+	uint constant public softCap = 300000 * 1 ether;
 
-    uint costInWeiPerToken;
+	uint constant public startDate = 1513942254;
 
-    bool public transferEnabled;
-    bool public halted = false;
+	uint constant public endDate = 1523942254;
 
-    uint public publicSalePool = 430869000;
-    uint public treasuryPool = 589140000;
-    uint public cctPool = 410000000;
-    uint public bciDeveloperPool = 300000000;
+	uint constant public price = 1000000000000000;
 
+	uint public amountRaised;
 
-    uint public totalSupply;
-    // 2.1 bln tokens
-    uint public maxSupply = 2100000000;
+	IERC20Token public tokenReward;
 
-    uint constant DECIMALS = 0;
+	mapping (address => uint256) public balanceOf;
 
-    string public name = "BLOCKCERT";
-    string public symbol = "BCERT";
+	bool public crowdSaleClosed = false;
 
-    mapping (address => uint) public balanceOf;
+	bool public crowdSalePaused = false;
 
-    modifier validAddress(address _address) {
-        require(_address != 0x0);
-        _;
-    }
+	event FundTransfer(address backer, uint amount, bool isContribution);
 
-    modifier validPurchase() {
-        require(now >= startDate);
-        require(now <= endDate);
-        require(msg.value > 0);
-        _;
-    }
+	/**
+	 * Constrctor function
+	 *
+	 * Setup the owner
+	 */
+	function CrowdSale(address addressOfTokenUsedAsReward) public {
+		tokenReward = IERC20Token(addressOfTokenUsedAsReward);
+	}
 
-    modifier validUnHalt(){
-        require(halted == false);
-        _;
-    }
+	/**
+	 * Fallback function
+	 *
+	 * The function without name is the default function that is called whenever anyone sends funds to a contract
+	 */
+	function() payable external {
+		require(!crowdSaleClosed);
+		require(!crowdSalePaused);
+		require(startDate <= now);
+		require(endDate >= now);
 
-    modifier transferAllowed() {
-        require(transferEnabled == true);
-        _;
-    }
+		uint contractTokenBalance = tokenReward.balanceOf(this);
+		require(contractTokenBalance > 0);
 
-    function ()
-        external
-        transferAllowed
-        validAddress(msg.sender)
-        validPurchase
-        validUnHalt
-        payable
-    {
-        uint tokenAmount = msg.value / costInWeiPerToken;
+		uint amount = msg.value;
+		uint tokenAmount = amount / price;
 
-        require(tokenAmount <= publicSalePool);
+		if (tokenAmount > contractTokenBalance) {
+			tokenAmount = contractTokenBalance;
+		}
 
-    }
+		amount = tokenAmount * price;
+		if (amount < msg.value) {
+			msg.sender.transfer(msg.value - amount);
+		}
 
+		balanceOf[msg.sender] += amount;
+		amountRaised += amount;
+		tokenReward.transfer(msg.sender, tokenAmount);
+		FundTransfer(msg.sender, amount, true);
+	}
 
-    function CrowdSale(
-        bool _transferEnabled,
-        uint _costInWeiPerToken
-    ) public
-    {
-        transferEnabled = _transferEnabled;
-        costInWeiPerToken = _costInWeiPerToken;
-    }
-
-    function haltTransfer() external onlyOwner {
-        
-    }
+	/**
+		Set or off pause crowdsale
+		@param _pause - true or false (1 or 0)
+	*/
+	function setPauseStatus(bool _pause) external ownerOnly {
+		require(amountRaised >= softCap);
+		crowdSalePaused = _pause;
+	}
 
 
+	/**
+		Close crowdsale
+	*/
+	function closeCrowdsale() external ownerOnly {
+		require(amountRaised >= softCap);
+		crowdSaleClosed = true;
+	}
 
-
-
-
-
-
-
-
-
+	/**
+	 * Withdraw the funds
+	 *
+	 * Checks to see if goal or time limit has been reached, and if so, and the funding goal was reached,
+	 * sends the entire amount to the owner. If goal was not reached, each contributor can withdraw
+	 * the amount they contributed.
+	 */
+	function safeWithdrawal() external ownerOnly {
+		require(crowdSaleClosed || endDate < now || tokenReward.balanceOf(this) == 0);
+		owner.transfer(this.balance);
+	}
 }

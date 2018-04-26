@@ -26,7 +26,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    event Burn(address indexed _from, address indexed _blockcertsAddress, uint256 _value);
+    event Convert(address indexed _from, address indexed _blockcertsAddress, uint256 _value);
 
 	event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
@@ -186,7 +186,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     {
         balanceOf[_from] = safeSub(balanceOf[_from], _amount);
         Transfer(_from, this, _amount);
-        Burn(_from, _blockcertsAddress, _amount);
+        Convert(_from, _blockcertsAddress, _amount);
         totalSupply = safeSub(totalSupply, _amount);
         return true;
     }

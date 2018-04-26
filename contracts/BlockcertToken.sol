@@ -26,6 +26,8 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
+    event Burn(address indexed _from, address indexed _blockcertsAddress, uint256 _value);
+
 	event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
 	/**
@@ -146,4 +148,46 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 
 		Transfer(_from, this, _amount);
 	}
+
+    /**
+        @dev converting tokens from the ethereum network to the blockcerts network by token holder
+
+        @param _blockcertsAddress       blockcerts network account to which funds must be transferred
+        @param _amount                  convert amount
+    */
+    function convert(address _blockcertsAddress, uint256 _amount) public returns (bool success) {
+        return _convert(msg.sender, _blockcertsAddress, _amount);
+    }
+
+    /**
+        @dev converting tokens from the ethereum network any account to the blockcerts network by contract owner
+
+        @param _from                    account to convert the amount from
+        @param _blockcertsAddress       blockcerts network account to which funds must be transferred
+        @param _amount                  convert amount
+    */
+    function convertFrom(address _from, address _blockcertsAddress, uint256 _amount) public returns (bool success) {
+        require(msg.sender == owner || _from == msg.sender);
+        return _convert(_from, _blockcertsAddress, _amount);
+    }
+
+    /**
+        @dev converting tokens from the ethereum network to the blockcerts network by contract owner
+
+        @param _from                    account to convert the amount from
+        @param _blockcertsAddress       blockcerts network account to which funds must be transferred
+        @param _amount                  convert amount
+    */
+    function _convert(address _from, address _blockcertsAddress, uint256 _amount)
+    private
+    validAddress(_from)
+    validAddress(_blockcertsAddress)
+    returns (bool success)
+    {
+        balanceOf[_from] = safeSub(balanceOf[_from], _amount);
+        Transfer(_from, this, _amount);
+        Burn(_from, _blockcertsAddress, _amount);
+        totalSupply = safeSub(totalSupply, _amount);
+        return true;
+    }
 }

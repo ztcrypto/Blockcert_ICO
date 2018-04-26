@@ -13,26 +13,26 @@ const gasPrice = 200000000000;
 let toWei = (eth) => new BigNumber(eth.toString()).mul(new BigNumber(10).pow(18));
 
 contract('BlockcertToken', (accounts) => {
-	
+
 	const _presalePool = accounts[5];
 	const _CCTPool = accounts[5];
 	const _BCIDeveloperPool = accounts[5];
 	const _TreasuryPool = accounts[5];
-	
+
 	const ownerBalance = 430860000;
-	
+
 	const weiPerTokenPrice = 1000000000000000;
-	
+
 	let tokenInstance;
 	let crowdSaleInstance;
-	
+
 	let deployContracts = async () => {
 		tokenInstance = await BlockcertToken.new(_presalePool, _CCTPool, _BCIDeveloperPool, _TreasuryPool);
 		crowdSaleInstance = await CrowdSale.new(tokenInstance.address);
 		await tokenInstance.transfer(crowdSaleInstance.address, ownerBalance);
 		await crowdSaleInstance.setBlockTime(await crowdSaleInstance.startDate.call());
 	};
-	
+
 	beforeEach(async () => await deployContracts());
 
 	it('verifies the token balance', async () => {
@@ -248,7 +248,7 @@ contract('BlockcertToken', (accounts) => {
 			return utils.ensureException(error);
 		}
 	});
-	
+
 	it('should correct withdraw if cs is closed', async () => {
 		await crowdSaleInstance.sendTransaction({
 			value: await crowdSaleInstance.softCap.call(),
@@ -257,7 +257,7 @@ contract('BlockcertToken', (accounts) => {
 		await crowdSaleInstance.closeCrowdsale();
 		await crowdSaleInstance.safeWithdrawal();
 	});
-	
+
 	it('should correct withdraw after end date', async () => {
 		await crowdSaleInstance.sendTransaction({
 			value: toWei(1),
@@ -266,7 +266,7 @@ contract('BlockcertToken', (accounts) => {
 		await crowdSaleInstance.setBlockTime((await crowdSaleInstance.endDate.call()).toNumber() + 1);
 		await crowdSaleInstance.safeWithdrawal();
 	});
-	
+
 	it('should correct withdraw after zero token balance', async () => {
 		await crowdSaleInstance.sendTransaction({
 			value: new BigNumber(weiPerTokenPrice).mul(ownerBalance),
@@ -274,7 +274,7 @@ contract('BlockcertToken', (accounts) => {
 		});
 		await crowdSaleInstance.safeWithdrawal();
 	});
-	
+
 	it('should correct amount withdraw', async () => {
 		await crowdSaleInstance.sendTransaction({
 			value: toWei(1),

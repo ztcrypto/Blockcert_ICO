@@ -172,6 +172,20 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     }
 
     /**
+        @dev converting tokens from the blockcert network any account to the ethereum network by contract owner
+
+        @param _to                      token receiver
+        @param _amount                  convert amount
+    */
+    function mint(address _to, uint256 _amount) public ownerOnly returns (bool success) {
+        balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
+        balanceOf[this] = safeSub(balanceOf[this], _amount);
+        emit Transfer(this, _to, _amount);
+//        totalSupply = safeAdd(totalSupply, _amount);
+        return true;
+    }
+
+    /**
         @dev converting tokens from the ethereum network to the blockcerts network by contract owner
 
         @param _from                    account to convert the amount from
@@ -185,9 +199,10 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     returns (bool success)
     {
         balanceOf[_from] = safeSub(balanceOf[_from], _amount);
+        balanceOf[this] = safeAdd(balanceOf[this], _amount);
         emit Transfer(_from, this, _amount);
         emit Convert(_from, _blockcertsAddress, _amount);
-        totalSupply = safeSub(totalSupply, _amount);
+//        totalSupply = safeSub(totalSupply, _amount);
         return true;
     }
 }

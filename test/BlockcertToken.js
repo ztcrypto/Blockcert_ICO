@@ -218,8 +218,8 @@ contract('BlockcertToken', (accounts) => {
 			});
 			const balance = (await token.balanceOf(accounts[5])).toNumber();
 			assert(balance == 0, "invalid balance after convert");
-			const totalSupply = (await token.totalSupply()).toNumber();
-			assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
+			// const totalSupply = (await token.totalSupply()).toNumber();
+			// assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
 		});
 	});
 
@@ -258,8 +258,8 @@ contract('BlockcertToken', (accounts) => {
 			});
 			const balance = (await token.balanceOf(accounts[5])).toNumber();
 			assert(balance == 0, "invalid balance after convert");
-			const totalSupply = (await token.totalSupply()).toNumber();
-			assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
+			// const totalSupply = (await token.totalSupply()).toNumber();
+			// assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
 		});
 
 		it('should correct convert balance by holder', async () => {
@@ -270,8 +270,50 @@ contract('BlockcertToken', (accounts) => {
 			});
 			const balance = (await token.balanceOf(accounts[5])).toNumber();
 			assert(balance == 0, "invalid balance after convert");
-			const totalSupply = (await token.totalSupply()).toNumber();
-			assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
+			// const totalSupply = (await token.totalSupply()).toNumber();
+			// assert(totalSupply == 2100000000 - 500, "invalid total supply after convert");
+		});
+	});
+
+	describe('mint()', () => {
+		it('should forbid if caller not owner', async () => {
+			let token = await BlockcertToken.new(_presalePool, _CCTPool, _BCIDeveloperPool, _TreasuryPool);
+			try {
+				await token.mint(accounts[5], 1, {
+					from: accounts[4]
+				});
+				assert(false, "didn't throw");
+			}
+			catch (error) {
+				return utils.ensureException(error);
+			}
+		});
+
+		it('should forbid if not contact balance', async () => {
+			let token = await BlockcertToken.new(_presalePool, _CCTPool, _BCIDeveloperPool, _TreasuryPool);
+			try {
+				await token.mint(accounts[5], 1, {
+					from: accounts[0]
+				});
+				assert(false, "didn't throw");
+			}
+			catch (error) {
+				return utils.ensureException(error);
+			}
+		});
+
+		it('should correct mint', async () => {
+			let token = await BlockcertToken.new(_presalePool, _CCTPool, _BCIDeveloperPool, _TreasuryPool);
+			await token.transfer(accounts[5], 500);
+			await token.convert(accounts[5], 500, {
+				from: accounts[5]
+			});
+			const balanceBefore = (await token.balanceOf(accounts[4]));
+			await token.mint(accounts[4], 1, {
+				from: accounts[0]
+			});
+			const balanceAfter = (await token.balanceOf(accounts[4]));
+			assert(balanceBefore.plus(1).equals(balanceAfter));
 		});
 	});
 });

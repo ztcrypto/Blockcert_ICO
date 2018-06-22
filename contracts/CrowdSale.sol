@@ -5,10 +5,10 @@ import './Owned.sol';
 import './interfaces/IERC20Token.sol';
 
 // TODO remove before deploy!!!
-//import "./Debug.sol";
+import "./Debug.sol";
 
 contract CrowdSale is Owned
-//, Debug
+, Debug
 {
 
 	uint constant public softCap = 300000 * 1 ether;

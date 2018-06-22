@@ -1,4 +1,4 @@
-pragma solidity ^0.4.16;
+pragma solidity ^0.4.24;
 
 
 import './Utils.sol';
@@ -38,7 +38,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		@param _BCIDeveloperPool    BCI Developer pool address
 		@param _TreasuryPool        Treasury pool address
 	*/
-	function BlockcertToken(address _presalePool, address _CCTPool, address _BCIDeveloperPool, address _TreasuryPool)
+    constructor (address _presalePool, address _CCTPool, address _BCIDeveloperPool, address _TreasuryPool)
 	public
 	validAddress(_presalePool)
 	validAddress(_CCTPool)
@@ -52,15 +52,15 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		uint treasuryPoolBalance = 859140000;
 
 		balanceOf[msg.sender] = publicSalePoolBalance;
-		Transfer(this, msg.sender, publicSalePoolBalance);
+		emit Transfer(this, msg.sender, publicSalePoolBalance);
 		balanceOf[_presalePool] = presalePoolBalance;
-		Transfer(this, _presalePool, presalePoolBalance);
+        emit Transfer(this, _presalePool, presalePoolBalance);
 		balanceOf[_CCTPool] = cctPoolBalance;
-		Transfer(this, _CCTPool, cctPoolBalance);
+        emit Transfer(this, _CCTPool, cctPoolBalance);
 		balanceOf[_BCIDeveloperPool] = bciDeveloperPoolBalance;
-		Transfer(this, _BCIDeveloperPool, bciDeveloperPoolBalance);
+        emit Transfer(this, _BCIDeveloperPool, bciDeveloperPoolBalance);
 		balanceOf[_TreasuryPool] = treasuryPoolBalance;
-		Transfer(this, _TreasuryPool, treasuryPoolBalance);
+        emit Transfer(this, _TreasuryPool, treasuryPoolBalance);
 	}
 
 	/**
@@ -79,7 +79,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 	{
 		balanceOf[msg.sender] = safeSub(balanceOf[msg.sender], _value);
 		balanceOf[_to] = safeAdd(balanceOf[_to], _value);
-		Transfer(msg.sender, _to, _value);
+        emit Transfer(msg.sender, _to, _value);
 		return true;
 	}
 
@@ -102,7 +102,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		allowance[_from][msg.sender] = safeSub(allowance[_from][msg.sender], _value);
 		balanceOf[_from] = safeSub(balanceOf[_from], _value);
 		balanceOf[_to] = safeAdd(balanceOf[_to], _value);
-		Transfer(_from, _to, _value);
+        emit Transfer(_from, _to, _value);
 		return true;
 	}
 
@@ -128,7 +128,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		require(_value == 0 || allowance[msg.sender][_spender] == 0);
 
 		allowance[msg.sender][_spender] = _value;
-		Approval(msg.sender, _spender, _value);
+        emit Approval(msg.sender, _spender, _value);
 		return true;
 	}
 
@@ -146,7 +146,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		balanceOf[_from] = safeSub(balanceOf[_from], _amount);
 		totalSupply = safeSub(totalSupply, _amount);
 
-		Transfer(_from, this, _amount);
+        emit Transfer(_from, this, _amount);
 	}
 
     /**
@@ -185,8 +185,8 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     returns (bool success)
     {
         balanceOf[_from] = safeSub(balanceOf[_from], _amount);
-        Transfer(_from, this, _amount);
-        Convert(_from, _blockcertsAddress, _amount);
+        emit Transfer(_from, this, _amount);
+        emit Convert(_from, _blockcertsAddress, _amount);
         totalSupply = safeSub(totalSupply, _amount);
         return true;
     }

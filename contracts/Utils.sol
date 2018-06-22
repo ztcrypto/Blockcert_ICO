@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.24;
 
 /*
     Utilities & Common Modifiers
@@ -7,7 +7,7 @@ contract Utils {
     /**
         constructor
     */
-    function Utils() public {
+    constructor () public {
     }
 
     // verifies that an amount is greater than zero

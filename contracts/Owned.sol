@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.24;
 import './interfaces/IOwned.sol';
 
 /*
@@ -13,7 +13,7 @@ contract Owned is IOwned {
 	/**
 		@dev constructor
 	*/
-	function Owned() public {
+	constructor () public {
 		owner = msg.sender;
 	}
 
@@ -40,7 +40,7 @@ contract Owned is IOwned {
 	*/
 	function acceptOwnership() public {
 		require(msg.sender == newOwner);
-		OwnerUpdate(owner, newOwner);
+		emit OwnerUpdate(owner, newOwner);
 		owner = newOwner;
 		newOwner = 0x0;
 	}

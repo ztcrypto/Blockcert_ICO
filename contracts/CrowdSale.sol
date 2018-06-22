@@ -1,14 +1,14 @@
-pragma solidity ^0.4.16;
+pragma solidity ^0.4.24;
 
 
 import './Owned.sol';
 import './interfaces/IERC20Token.sol';
 
 // TODO remove before deploy!!!
-//import "./Debug.sol";
+import "./Debug.sol";
 
 contract CrowdSale is Owned
-//, Debug
+, Debug
 {
 
 	uint constant public softCap = 300000 * 1 ether;
@@ -36,7 +36,7 @@ contract CrowdSale is Owned
 	 *
 	 * Setup the owner
 	 */
-	function CrowdSale(address addressOfTokenUsedAsReward) public {
+    constructor (address addressOfTokenUsedAsReward) public {
 		tokenReward = IERC20Token(addressOfTokenUsedAsReward);
 	}
 
@@ -69,7 +69,7 @@ contract CrowdSale is Owned
 		balanceOf[msg.sender] += amount;
 		amountRaised += amount;
 		tokenReward.transfer(msg.sender, tokenAmount);
-		FundTransfer(msg.sender, amount, true);
+		emit FundTransfer(msg.sender, amount, true);
 	}
 
 	/**
@@ -99,6 +99,6 @@ contract CrowdSale is Owned
 	 */
 	function safeWithdrawal() external ownerOnly {
 		require(crowdSaleClosed || endDate < now || tokenReward.balanceOf(this) == 0);
-		owner.transfer(this.balance);
+		owner.transfer(address(this).balance);
 	}
 }

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.25;
 
 /*
     Utilities & Common Modifiers
@@ -7,8 +7,8 @@ contract Utils {
     /**
         constructor
     */
-    constructor () public {
-    }
+    /*constructor () public {
+    }*/
 
     // verifies that an amount is greater than zero
     modifier greaterThanZero(uint256 _amount) {

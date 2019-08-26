@@ -31,15 +31,14 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 	event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
 	/**
-		@dev constructor
-
-		@param _presalePool         Presale Pool address
-		@param _CCTPool             CCT Pool address
-		@param _BCIDeveloperPool    BCI Developer pool address
-		@param _TreasuryPool        Treasury pool address
+	*	dev constructor
+	*
+	*	param _presalePool         Presale Pool address
+	*	param _CCTPool             CCT Pool address
+	*	param _BCIDeveloperPool    BCI Developer pool address
+	*	param _TreasuryPool        Treasury pool address
 	*/
-    constructor (address _presalePool, address _CCTPool, address _BCIDeveloperPool, address _TreasuryPool)
-	public
+    constructor (address _presalePool, address _CCTPool, address _BCIDeveloperPool, address _TreasuryPool) public
 	validAddress(_presalePool)
 	validAddress(_CCTPool)
 	validAddress(_BCIDeveloperPool)

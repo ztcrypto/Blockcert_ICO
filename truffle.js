@@ -1,8 +1,15 @@
 module.exports = {
 	networks: {
-		development: {
+		ganache_cli: {
 			host: "127.0.0.1",
 			port: 8545,
+			gas: 2816044,
+			network_id: "*", // Match any network id
+			gasPrice: 200000000000
+		},
+		ganache_ui: {
+			host: "127.0.0.1",
+			port: 7545,
 			gas: 2816044,
 			network_id: "*", // Match any network id
 			gasPrice: 200000000000

@@ -10,7 +10,7 @@ contract Converter is Owned {
 
     event Convert(address indexed _from, address indexed _toEthereumAddress, uint256 _value);
 
-    constructor () public {}
+    constructor() public {}
 
     /**
         @dev send funds to the account after him freezed tokens on ethereum network

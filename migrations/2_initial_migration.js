@@ -1,5 +1,5 @@
-var BlockcertToken = artifacts.require("BlockcertToken.sol");
-//var Converter = artifacts.require("Converter.sol");
+//var BlockcertToken = artifacts.require("BlockcertToken.sol");
+var BlockcertAltCoin = artifacts.require("BlockcertAltCoin.sol");
 var CrowdSale = artifacts.require("CrowdSale.sol");
 var Debug = artifacts.require("Debug.sol");
 var Owned = artifacts.require("Owned.sol");
@@ -13,7 +13,13 @@ module.exports = function(deployer, network, accounts) {
   */
 
   var web3;
-  const addressPools = [accounts[6],accounts[7],accounts[8],accounts[9]];
+  const addressPools = ['0x0f5baf1c615da9e83df25518e2bbe4e21f873ea5',
+  '0xae9f43d4ffb2bc797634b8c89dbc9288dc2aaa00',
+  '0x22c1906ef44f36d789946c1e185efbd3abe3dab9',
+  '0x1c6fb34ab5a588834fe875440af71cbd376a9b81'];
+  var standard = "0.1Alpha";
+  var name = "ACME Alt Coin";
+  var symbol = "ACME"
 
   function setupWeb3() {
         if (typeof web3 !== 'undefined') {
@@ -25,12 +31,16 @@ module.exports = function(deployer, network, accounts) {
   }
 
 
-  deployer.deploy(BlockcertToken,'0xe0c41184383e5e43f21797a88700db1fe9f10165',
-  '0xe43660c5e0427972f0e86be45fa0586b28da9566',
-  '0x25a59a2c996a2b3b022dfd12c9f626e43320528b',
-  '0x33a861d98a32eb6f5153e8141a757fcd7aa83bad');
-  //deployer.deploy(Converter);
-  deployer.deploy(CrowdSale,'0x939dd48c8e353e51f9d94eeba8717a299fb6e7e1');
+  /*deployer.deploy(BlockcertToken,'0xe8fbc02278e83f79c0de9bf8dd70d9dcadb827b9',
+  '0x0403d7d84f5bbc1b2da322c478be802c9d05b097',
+  '0x0b6a9c578bd80bcc4cb776d8b364f584e214287c',
+  '0x75e0678d40c217f77630ec089cebb67844720686');*/
+  deployer.deploy(BlockcertAltCoin, standard, name, symbol, '0x3230a60fa5ddd37d75d9635cb4fffc2bcc818ebf',
+  '0xc5b2d4a62642e2470b0b9a93c8bc99d72c60348b',
+  '0x486855ec3d9368792b1695befcfe99b2293d39ea',
+  '0xc55eb56bebcb3fee1740f0380000b2b68d1ce2b0',
+  '0xa98f1ba85cd2451d4209f0c47c71b2199d4dd38b',100000000);
+  deployer.deploy(CrowdSale,'0xa98f1ba85cd2451d4209f0c47c71b2199d4dd38b');
   deployer.deploy(Debug);
   deployer.deploy(Owned);
   deployer.deploy(Utils);

@@ -22,6 +22,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
     //Based on pool addresses
 	mapping (address => uint256) public balanceOf;
+    /* Where unit256 is the datestame indicating start date of when a Pool is active */
+    mapping (address => uint64) public listOfPools;
 
 	mapping (address => mapping (address => uint256)) public allowance;
 
@@ -43,7 +45,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 		/* Default start date current date of migration for default 5 required pools */
         balanceOf[msg.sender] = _poolInitialBalance;
-		emit Transfer(this, msg.sender, _poolInitialBalance);
+        emit Transfer(this, msg.sender, _poolInitialBalance);
 		
         balanceOf[_poolA] = _poolInitialBalance;
         emit Transfer(this, _poolA, _poolInitialBalance);
@@ -61,9 +63,18 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         emit Transfer(this, _poolE, _poolInitialBalance);
 	}
 
-    function addNewPool(address newPoolAddress, uint poolBalance, int256 startDate) public {
+    function addNewPool(address newPoolAddress, uint poolBalance, uint64 startDate) public {
         require(newPoolAddress != 0x0);
         balanceOf[newPoolAddress] = poolBalance;
+        listOfPools[newPoolAddress] = startDate;
+    }
+
+    function setPoolStartDate(address _poolAddress, uint64 _startDate) public {
+        listOfPools[_poolAddress] = _startDate;
+    }
+
+    function getPoolStartDate(address _poolAddress) public returns(uint64) {
+        return listOfPools[_poolAddress];
     }
 
     function getPoolBalance(address _poolAddress) public returns(uint) {
@@ -73,6 +84,29 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
     function getAltCoinInfo() public returns(string, string, string) {
         return(standard, name, symbol);
     }
+
+    /*function increasePoolBalance(address _poolAddress, uint _amount) {
+
+    }*/
+
+    /*function isPoolActive(address _poolAddress) returns(bool) {
+        if(now >= listOfPools[_poolAddress]) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        return false;
+    }*/
+
+    /*function getPools() public view returns(address[] memory) {
+        address[] memory ret = new listOfPools[](addressRegistryCount);
+        for (uint i = 0; i < addressRegistryCount; i++) {
+            ret[i] = listOfPools[i];
+        }
+        return ret;
+    }*/
+
 
 	/**
 		@dev send coins

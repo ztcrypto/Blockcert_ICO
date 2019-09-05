@@ -5,7 +5,7 @@ const BigNumber = require('bignumber.js');
 var Web3 = require("web3");
 
 contract('BlockcertAltCoin', function(accounts) {
-
+    const hostPort = '8545';
     var addressB = accounts[1];
     var addressC = accounts[2];
     var addressD = accounts[3];
@@ -19,7 +19,7 @@ contract('BlockcertAltCoin', function(accounts) {
     const ownerBalance = 430860000;
 
     let blockcertAltCoin;
-    let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    let web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${hostPort}`));
 
     it("should have Blockcert Alt Coin new context", async() => {
         blockcertAltCoin = await BlockcertAltCoin.new(standard,name,symbol,addressB,addressC,addressD,addressE,addressF,poolInitialBalance);
@@ -62,19 +62,31 @@ contract('BlockcertAltCoin', function(accounts) {
         let contractOwnerCoinbaseBalance = await web3.eth.getBalance(accounts[0]);
         let transferToBalance = await blockcertAltCoin.balanceOf.call(addressF);
         console.log("\t\t[ Coinbase WEI Balance::ETH " + web3.utils.fromWei(contractOwnerCoinbaseBalance,"ether") + "::" + transferToBalance );
-        let successTransfer = await blockcertAltCoin.transfer(addressF, 500);
-        let contractOwnerCoinbaseBalanceAFTER = await web3.eth.getBalance(accounts[0]);
-        let transferToBalanceAFTER = await blockcertAltCoin.balanceOf.call(addressF);
-        console.log("\t\t[ Coinbase WEI Balance::ETH " + web3.utils.fromWei(contractOwnerCoinbaseBalanceAFTER,"ether") + "::" + transferToBalanceAFTER );
-        assert.equal(successTransfer, true, "Transfer unsuccessful");
-        //assert.notEqual(transferToBalance,transferToBalanceAFTER, "Transfer balance must not equal after transfer but must be larger in amount")
-        //assert.greater(transferToBalance,transferToBalanceAFTER, "Transfer balance must not equal after transfer but must be larger in amount")
-        /*
-        let balance;
-        balance = await blockcertAltCoin.balanceOf.call(accounts[0]);
-        //assert.equal(balance, new BigNumber(ownerBalance).minus(500).toNumber());
-        balance = await blockcertAltCoin.balanceOf.call(accounts[5]);
-        assert.equal(balance, 500, "Does not balance");*/
+        let successTransferResult = await blockcertAltCoin.transfer(addressF, 500);
+        let transferToBalanceAfter = await blockcertAltCoin.balanceOf.call(addressF);
+        let transferBalanceAfter = await web3.eth.getBalance(accounts[0]);
+        console.log("\t\t[ Balance before transfer::Balance after transfer " + transferToBalance + "::" + transferToBalanceAfter);
+        console.log("\t\t[ Coinbase balance before transfer::Coinbase balance after transfer " + contractOwnerCoinbaseBalance + "::" + transferBalanceAfter);
+        assert( transferToBalanceAfter > transferToBalance, `Transfer to address ${addressF} must be greater than previous balance and coinbase balance must be less`);
+    });
+
+    it('verifies that a transfer fires a Transfer event', async () => {
+        let res = await blockcertAltCoin.transfer(addressF, 500);
+        assert(res.logs.length > 0 && res.logs[0].event == 'Transfer');
+    });
+
+    it('should throw when attempting to transfer more than the balance', async () => {
+        try {
+            console.log(await blockcertAltCoin.balanceOf.call(addressF) + "::" + await web3.eth.getBalance(accounts[0]));
+            /* Make transfer amount from coinbase balance larger */
+            let transferAmount = await web3.eth.getBalance(accounts[0]) + 10;
+            console.log(transferAmount); 
+            await blockcertAltCoin.transfer(addressB, transferAmount);
+            assert(false, "didn't throw");
+        }
+        catch (error) {
+            return utils.ensureException(error);
+        }
     });
 
 });

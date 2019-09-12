@@ -20,25 +20,29 @@ module.exports = function(deployer, network, accounts) {
   var standard = "0.1Alpha";
   var name = "ACME Alt Coin";
   var symbol = "ACME"
-  
+  defaultAccount = accounts[3];
 
   function setupWeb3() {
         if (typeof web3 !== 'undefined') {
             web3 = new Web3(web3.currentProvider);
         } else {
             // set the provider you want from Web3.providers
-            web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+            web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
         }
   }
 
   var effectiveTime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * (365 + 1));// (in the future a year and a day)
   
-  deployer.deploy(BlockcertAltCoin, standard, name, symbol, '0xf10314ad300342a9d5dd4a4a0ca95c09f50b7b81',
-  '0x41fd5382ea3c4a5c678b6a9df1e3fc6d3026fa57',
-  '0x957e26ca7237a05771999809f0a4d37652f85de4',
-  '0x5de87ba2e7ec9e794a80f029573f47156c6b590b',
-  '0x6cc7071a7df5f442f83870c832f665bdf7f818b2', 859140000);
-  deployer.deploy(CrowdSale,'0x6964734e1894f6974afe20ac4519439ae3806144');
+  ropstenCoinbase = '0xB4974728A226702dA7d9a6B9892699aC917D82cF';
+  poolA = '0x13ce8E47301da01484d04a5952253FEa219956E0';
+  poolB = '0xd49253410da24213Abd43cFE5EE5EcE56e67AA6A';
+  poolC = '0x3CE6dDA8f6C992421c96e462909743A93197Da44';
+  poolD = '0xE177d75A410c2644633540613726825F9e8330E6';
+  poolE = '0xCEa5e0522f4A6427570f7EBC38eDA7090a85459A';
+  crowdSaleAccount = '0xfb414Aa755e6ddB1bbFcD02955e187C111FaAf8B';
+
+  deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, 859140000);
+  deployer.deploy(CrowdSale,crowdSaleAccount);
   deployer.deploy(Debug);
   deployer.deploy(Owned);
   deployer.deploy(Utils);

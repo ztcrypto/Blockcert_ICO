@@ -23,5 +23,17 @@ Blockcert Alt-Coin is the current Blockcert Token smart contract implementation.
 A number of functions have been added to the Alt-Coin contract that gives the alt-coin owner more control.  These functions will allow the contract owner to add future pools.  There are functions that the owner can call to get information of current pools in the contract as well as functions that return information about the Alt-Coin itself.
 
 
+#Developer API Key for development purposes
+
+A wallet address must be certified in the BCBC network and must go through KYC process.  Below is the wallet address that's been certified in the BCBC network that can be used for development purposes.
+
+Wallet Address: 0xB4974728A226702dA7d9a6B9892699aC917D82cF
+Private Key: DB206DB4DD74CC1757CEDEBFAA7AE019DAB874A746465D838ED3264E2DF8C0C5
+
+Wallet Address: 0x71b7330971044867EC3534b4997eea365e55c3BC
+Private Key: 678bd406de816db51a3ca2f132053aadbe6b7ed984b3bde244800b88fe610c80
+
+apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
+
 
 

@@ -9,7 +9,7 @@ module.exports = {
 			},
 			network_id: "*",
 			gas: 4000000,
-			from: "0xB4974728A226702dA7d9a6B9892699aC917D82cF"
+			from: "0xdf9c0a954675a59aca0d2bec21be8a8395ae13cb"
 		},
 		truffle_develop: {
 			host: "127.0.0.1",

@@ -35,5 +35,19 @@ Private Key: 678bd406de816db51a3ca2f132053aadbe6b7ed984b3bde244800b88fe610c80
 
 apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
 
+#Deploy contract and interface with alt coin in Geth
+1. Must get both ABI and Binary of contract.  Use solc command
+        solc -o ../AbiBin --bin --abi ./BlockcertAltCoin.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/Utils.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/Owned.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IOwned.sol
+2. Clone https://gitlab.1to1core.com/1to1core/blockcerts-smart-contracts
+        i. Copy content from the ABI output and paste in the the ABI.js
+        ii. Copy content from BIN output and paste in the ByteCode.js file
+        iii. from blockcerts-smart-contracts, run "npm start".  This will deploy the smart contract in the BCBC network.  Make sure to note the contract address and contract deployed hash
+        iiii. Open terminal and run geth command: geth attach http://node2.blockcerts.com:6111
+3. Create instance of BlockcertAltCoin smart contract in Geth
+        i. On the geth command console create the following
+                var BlockcertAltCoin = web3.eth.contract(<copy and paste the ABI from the ABI file>)
+                var altCoinInstance = BlockcertAltCoin.at(<paste the contract deployed address>)
+                altCoinInstance.getAltCoinInfo.call() //you should get an output of the alt coin info passed from the constructor
+
 
 

@@ -13,7 +13,10 @@
         e.	Tie to BCBC Digital Wallet 
 2.	Work with James (and Parshanth) to determine the set-up of the BCBC Nodes on the Linux     Servers
 
-#Client Package Diagram Flow
+## Usecase Diagram
+
+<img src="./Blockcert Alt-Coin Deployment Sequence.png" width="500">
+
 
 #Blockcert Alt Coin Usage
 Constructor requires nine parameters: version number of the alt coin smart contract, name of the company that owns the migrated Blockcert Alt-Coin, symbol for the alt-coin.  The alt-coin smart contract requires five wallet addresses that will be used as pools and the ninth parameter is the initial balance for the first five default pools.

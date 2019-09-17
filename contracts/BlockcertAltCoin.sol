@@ -1,4 +1,3 @@
-//pragma ^0.5.11;
 pragma solidity ^0.4.24;
 
 
@@ -18,12 +17,12 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 	uint8 public decimals = 0;
 
-	uint256 public totalSupply = 2100000000;
+	uint256 public totalSupply = 0;
 
     //Based on pool addresses
 	mapping (address => uint256) public balanceOf;
     /* Where unit256 is the datestame indicating start date of when a Pool is active */
-    mapping (address => uint64) public listOfPools;
+    mapping (address => uint256) public listOfPools;
 
 	mapping (address => mapping (address => uint256)) public allowance;
 
@@ -37,35 +36,35 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	*	dev constructor
 	*   Current pragma version throws compile error with more than 9 parameters.  Currently unable *   to pass arrays of Pool addresses from 2_initial_migration file.  
 	*/
-    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint _poolInitialBalance ) public {
+    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint _poolTotalSupply ) public {
 
         standard = _standard;
         name = _name;
         symbol = _symbol;
-
-		/* Default start date current date of migration for default 5 required pools */
-        balanceOf[msg.sender] = _poolInitialBalance;
-        emit Transfer(this, msg.sender, _poolInitialBalance);
+        
+		/* Set total supply */
+        balanceOf[msg.sender] = _poolTotalSupply;
+        emit Transfer(this, msg.sender, _poolTotalSupply);
 		
-        balanceOf[_poolA] = _poolInitialBalance;
-        emit Transfer(this, _poolA, _poolInitialBalance);
+        balanceOf[_poolA] = 0;
+        emit Transfer(this, _poolA, 0);
 		
-        balanceOf[_poolB] = _poolInitialBalance;
-        emit Transfer(this, _poolB, _poolInitialBalance);
+        balanceOf[_poolB] = 0;
+        emit Transfer(this, _poolB, 0);
 		
-        balanceOf[_poolC] = _poolInitialBalance;
-        emit Transfer(this, _poolC, _poolInitialBalance);
+        balanceOf[_poolC] = 0;
+        emit Transfer(this, _poolC, 0);
 
-		balanceOf[_poolD] = _poolInitialBalance;
-        emit Transfer(this, _poolD, _poolInitialBalance);
+		balanceOf[_poolD] = 0;
+        emit Transfer(this, _poolD, 0);
 
-        balanceOf[_poolE] = _poolInitialBalance;
-        emit Transfer(this, _poolE, _poolInitialBalance);
+        balanceOf[_poolE] = 0;
+        emit Transfer(this, _poolE, 0);
 	}
 
-    function addNewPool(address newPoolAddress, uint poolBalance, uint64 startDate) public {
+    function addNewPool(address newPoolAddress, uint amountToTransfer, uint256 startDate) public {
         require(newPoolAddress != 0x0);
-        balanceOf[newPoolAddress] = poolBalance;
+        transfer(newPoolAddress, amountToTransfer);
         listOfPools[newPoolAddress] = startDate;
     }
 
@@ -73,7 +72,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         listOfPools[_poolAddress] = _startDate;
     }
 
-    function getPoolStartDate(address _poolAddress) public returns(uint64) {
+    function getPoolStartDate(address _poolAddress) public returns(uint256) {
         return listOfPools[_poolAddress];
     }
 
@@ -85,9 +84,10 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         return(standard, name, symbol);
     }
 
-    /*function increasePoolBalance(address _poolAddress, uint _amount) {
-
-    }*/
+    function increasePoolBalance(address _poolAddress, uint _amount) {
+        require(_poolAddress != 0x0);
+        transfer(_poolAddress, _amount);
+    }
 
     /*function isPoolActive(address _poolAddress) returns(bool) {
         if(now >= listOfPools[_poolAddress]) {
@@ -109,7 +109,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 
 	/**
-		@dev send coins
+		@dev send coins from contract owner(msg.sender) total supply to the pool address indicated in the parameter
 		throws on any error rather then return a false flag to minimize user errors
 
 		@param _to      target address

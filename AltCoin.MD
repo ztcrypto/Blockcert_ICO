@@ -49,5 +49,10 @@ apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
                 var altCoinInstance = BlockcertAltCoin.at(<paste the contract deployed address>)
                 altCoinInstance.getAltCoinInfo.call() //you should get an output of the alt coin info passed from the constructor
 
+#JDevAltCoin Pragma5
+trulle version 5 is installed locally.  Local Truffle commands is located in based directory:
+        ./node_modules/truffle/build/cli.bundled.js
+To migrate using local Truffle:  ./node_modules/truffle/build/cli.bundled.js migrate --compile-all --reset --network ganache_ui
+
 
 

@@ -17,6 +17,7 @@ contract('BlockcertAltCoin', function(accounts) {
     var symbol = "ACME"
     var poolInitialBalance = 500000000;
     const ownerBalance = 430860000;
+    var effectiveTime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * (365 + 1));// (in the future a year and a day)
 
     let blockcertAltCoin;
     let web3 = new Web3(new Web3.providers.HttpProvider(`http://localhost:${hostPort}`));
@@ -25,6 +26,7 @@ contract('BlockcertAltCoin', function(accounts) {
         blockcertAltCoin = await BlockcertAltCoin.new(standard,name,symbol,addressB,addressC,addressD,addressE,addressF,poolInitialBalance);
 
         console.log("\t\t[ Blockcert ALT Coin contract address :: " + blockcertAltCoin.address + " ]");
+        console.log("\t\t[ Coinbase address:: " + accounts[0] + " ]");
         console.log("\t\t[ Pool B address:: " + addressB + " ]");
         console.log("\t\t[ Pool C address:: " + addressC + " ]");
         console.log("\t\t[ Pool D address:: " + addressD + " ]");
@@ -43,9 +45,23 @@ contract('BlockcertAltCoin', function(accounts) {
         assert.equal(altCoinInfo[2], symbol, "Alt Coin symbol not the same");
     }).timeout(100000);
 
+    it("contract owner address should be the coinbase address", async() => {
+        let ownerSenderAddress = await blockcertAltCoin.getContractOwnerAddress.call();
+        console.log("\t\t[Owner Sender :: Coinbase " + ownerSenderAddress + "::" + accounts[0] + " ]");
+        assert(ownerSenderAddress === accounts[0], "Contract owner and coinbase address must be the same");
+    });
+
+    it("should have total alt-coin supply", async() => {
+        let CoinbaseTotalSupply = await blockcertAltCoin.getPoolBalance.call(accounts[0]);
+        console.log("\t\tCoinbase total alt-coin supply :: " + CoinbaseTotalSupply + " ]" );
+        assert(CoinbaseTotalSupply == poolInitialBalance, "Doesn't look like coinbase total supply was set accordingly" );
+    });
+
     it("should have balance", async() => {
+        //set poolbalance
+        let balanceAfterTransfer = await blockcertAltCoin.increasePoolBalance(addressB, 1000);
         let altCoinBalance = await blockcertAltCoin.getPoolBalance.call(addressB);
-        assert.equal(altCoinBalance,poolInitialBalance,"Initial balance amount incorrect");
+        assert.equal(altCoinBalance,balanceAfterTransfer,"Initial balance amount incorrect");
     }).timeout(100000);
 
     it("should have new pool address", async() => {
@@ -58,10 +74,14 @@ contract('BlockcertAltCoin', function(accounts) {
 
     });
 
+    it("Confirm Pool Active Date/Time", async() => {
+        
+    });
+
     it('verifies the balances after a transfer', async () => {
         let contractOwnerCoinbaseBalance = await web3.eth.getBalance(accounts[0]);
         let transferToBalance = await blockcertAltCoin.balanceOf.call(addressF);
-        console.log("\t\t[ Coinbase WEI Balance::ETH " + web3.utils.fromWei(contractOwnerCoinbaseBalance,"ether") + "::" + transferToBalance );
+        //console.log("\t\t[ Coinbase WEI Balance::ETH " + web3.utils.fromWei(contractOwnerCoinbaseBalance,"ether") + "::" + transferToBalance );
         let successTransferResult = await blockcertAltCoin.transfer(addressF, 500);
         let transferToBalanceAfter = await blockcertAltCoin.balanceOf.call(addressF);
         let transferBalanceAfter = await web3.eth.getBalance(accounts[0]);

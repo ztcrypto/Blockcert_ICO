@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
 
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Utils.sol';
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol';
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Owned.sol';
+import './contracts/Utils.sol';
+import './contracts/interfaces/IERC20Token.sol';
+import './contracts/Owned.sol';
 
 /**
     ERC20 Standard Token implementation
@@ -61,6 +61,10 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         balanceOf[_poolE] = 0;
         emit Transfer(this, _poolE, 0);
 	}
+
+    function getContractOwnerAddress() public returns(address) {
+        return msg.sender;
+    }
 
     function addNewPool(address newPoolAddress, uint amountToTransfer, uint256 startDate) public {
         require(newPoolAddress != 0x0);

@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
 
-import './contracts/Utils.sol';
-import './contracts/interfaces/IERC20Token.sol';
-import './contracts/Owned.sol';
+import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Utils.sol';
+import '/Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol';
+import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Owned.sol';
 
 /**
     ERC20 Standard Token implementation
@@ -17,13 +17,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 	uint8 public decimals = 0;
 
-	uint256 public totalSupply = 0;
-
-    //Based on pool addresses
 	mapping (address => uint256) public balanceOf;
-    /* Where unit256 is the datestame indicating start date of when a Pool is active */
-    mapping (address => uint256) public listOfPools;
-
+    
 	mapping (address => mapping (address => uint256)) public allowance;
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
@@ -32,85 +27,38 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 	event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
+    event PoolCreated(address indexed _poolAddress, uint256 _initialAmount, uint _dateCreated);
+
 	/**
 	*	dev constructor
 	*   Current pragma version throws compile error with more than 9 parameters.  Currently unable *   to pass arrays of Pool addresses from 2_initial_migration file.  
 	*/
-    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint _poolTotalSupply ) public {
+    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
 
         standard = _standard;
         name = _name;
         symbol = _symbol;
         
-		/* Set total supply */
-        balanceOf[msg.sender] = _poolTotalSupply;
-        emit Transfer(this, msg.sender, _poolTotalSupply);
+		balanceOf[_poolA] = _poolABalance;
+        emit Transfer(this, _poolA, _poolABalance);
+        emit PoolCreated(_poolA, _poolABalance, now);
 		
-        balanceOf[_poolA] = 0;
-        emit Transfer(this, _poolA, 0);
+        balanceOf[_poolB] = _poolBBalance;
+        emit Transfer(this, _poolB, _poolBBalance);
+        emit PoolCreated(_poolB, _poolBBalance, now);
 		
-        balanceOf[_poolB] = 0;
-        emit Transfer(this, _poolB, 0);
-		
-        balanceOf[_poolC] = 0;
-        emit Transfer(this, _poolC, 0);
+        balanceOf[_poolC] = _poolCBalance;
+        emit Transfer(this, _poolC, _poolCBalance);
+        emit PoolCreated(_poolC, _poolCBalance, now);
 
-		balanceOf[_poolD] = 0;
-        emit Transfer(this, _poolD, 0);
+		balanceOf[_poolD] = _poolDBalance;
+        emit Transfer(this, _poolD, _poolDBalance);
+        emit PoolCreated(_poolD, _poolDBalance, now);
 
-        balanceOf[_poolE] = 0;
-        emit Transfer(this, _poolE, 0);
+        balanceOf[_poolE] = _poolEBalance;
+        emit Transfer(this, _poolE, _poolEBalance);
+        emit PoolCreated(_poolE, _poolEBalance, now);
 	}
-
-    function getContractOwnerAddress() public returns(address) {
-        return msg.sender;
-    }
-
-    function addNewPool(address newPoolAddress, uint amountToTransfer, uint256 startDate) public {
-        require(newPoolAddress != 0x0);
-        transfer(newPoolAddress, amountToTransfer);
-        listOfPools[newPoolAddress] = startDate;
-    }
-
-    function setPoolStartDate(address _poolAddress, uint64 _startDate) public {
-        listOfPools[_poolAddress] = _startDate;
-    }
-
-    function getPoolStartDate(address _poolAddress) public returns(uint256) {
-        return listOfPools[_poolAddress];
-    }
-
-    function getPoolBalance(address _poolAddress) public returns(uint) {
-        return balanceOf[_poolAddress];
-    }
-
-    function getAltCoinInfo() public returns(string, string, string) {
-        return(standard, name, symbol);
-    }
-
-    function increasePoolBalance(address _poolAddress, uint _amount) {
-        require(_poolAddress != 0x0);
-        transfer(_poolAddress, _amount);
-    }
-
-    /*function isPoolActive(address _poolAddress) returns(bool) {
-        if(now >= listOfPools[_poolAddress]) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        return false;
-    }*/
-
-    /*function getPools() public view returns(address[] memory) {
-        address[] memory ret = new listOfPools[](addressRegistryCount);
-        for (uint i = 0; i < addressRegistryCount; i++) {
-            ret[i] = listOfPools[i];
-        }
-        return ret;
-    }*/
-
 
 	/**
 		@dev send coins from contract owner(msg.sender) total supply to the pool address indicated in the parameter
@@ -193,7 +141,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 		// validate input
 
 		balanceOf[_from] = safeSub(balanceOf[_from], _amount);
-		totalSupply = safeSub(totalSupply, _amount);
+		//totalSupply = safeSub(totalSupply, _amount);
 
         emit Transfer(_from, this, _amount);
 	}
@@ -230,7 +178,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
         balanceOf[this] = safeSub(balanceOf[this], _amount);
         emit Transfer(this, _to, _amount);
-//        totalSupply = safeAdd(totalSupply, _amount);
+        //totalSupply = safeAdd(totalSupply, _amount);
         return true;
     }
 
@@ -251,7 +199,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         balanceOf[this] = safeAdd(balanceOf[this], _amount);
         emit Transfer(_from, this, _amount);
         emit Convert(_from, _blockcertsAddress, _amount);
-//        totalSupply = safeSub(totalSupply, _amount);
+        //totalSupply = safeSub(totalSupply, _amount);
         return true;
     }
 }

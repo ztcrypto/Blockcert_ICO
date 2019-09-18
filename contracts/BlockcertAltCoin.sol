@@ -44,23 +44,23 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         balanceOf[msg.sender] = _totalSupply;
 		emit Transfer(this, msg.sender, _totalSupply);
 
-		balanceOf[_poolA] = _poolABalance;
+		transfer(_poolA, _poolABalance);
         emit Transfer(this, _poolA, _poolABalance);
         emit PoolCreated(_poolA, _poolABalance, now);
 		
-        balanceOf[_poolB] = _poolBBalance;
+        transfer(_poolB, _poolBBalance);
         emit Transfer(this, _poolB, _poolBBalance);
         emit PoolCreated(_poolB, _poolBBalance, now);
 		
-        balanceOf[_poolC] = _poolCBalance;
+        transfer(_poolC, _poolCBalance);
         emit Transfer(this, _poolC, _poolCBalance);
         emit PoolCreated(_poolC, _poolCBalance, now);
 
-		balanceOf[_poolD] = _poolDBalance;
+		transfer(_poolD, _poolDBalance);
         emit Transfer(this, _poolD, _poolDBalance);
         emit PoolCreated(_poolD, _poolDBalance, now);
 
-        balanceOf[_poolE] = _poolEBalance;
+        transfer(_poolE, _poolEBalance);
         emit Transfer(this, _poolE, _poolEBalance);
         emit PoolCreated(_poolE, _poolEBalance, now);
 	}

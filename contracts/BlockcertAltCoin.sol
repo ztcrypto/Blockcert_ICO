@@ -17,6 +17,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 	uint8 public decimals = 0;
 
+    uint256 public totalSupply = 2100000000;
+
 	mapping (address => uint256) public balanceOf;
     
 	mapping (address => mapping (address => uint256)) public allowance;
@@ -33,12 +35,15 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	*	dev constructor
 	*   Current pragma version throws compile error with more than 9 parameters.  Currently unable *   to pass arrays of Pool addresses from 2_initial_migration file.  
 	*/
-    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
+    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _totalSupply, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
 
         standard = _standard;
         name = _name;
         symbol = _symbol;
         
+        balanceOf[msg.sender] = _totalSupply;
+		emit Transfer(this, msg.sender, _totalSupply);
+
 		balanceOf[_poolA] = _poolABalance;
         emit Transfer(this, _poolA, _poolABalance);
         emit PoolCreated(_poolA, _poolABalance, now);

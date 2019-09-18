@@ -40,8 +40,9 @@ module.exports = function(deployer, network, accounts) {
   poolD = '0xE177d75A410c2644633540613726825F9e8330E6';
   poolE = '0xCEa5e0522f4A6427570f7EBC38eDA7090a85459A';
   crowdSaleAccount = '0xfb414Aa755e6ddB1bbFcD02955e187C111FaAf8B';
+  totalSupply = 2100000000;
 
-  deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, 859140000,859140000,859140000,859140000,859140000 );
+  deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   deployer.deploy(CrowdSale,crowdSaleAccount);
   deployer.deploy(Debug);
   deployer.deploy(Owned);

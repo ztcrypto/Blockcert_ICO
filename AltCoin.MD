@@ -19,12 +19,7 @@
 
 
 #Blockcert Alt Coin Usage
-Constructor requires nine parameters: version number of the alt coin smart contract, name of the company that owns the migrated Blockcert Alt-Coin, symbol for the alt-coin.  The alt-coin smart contract requires five wallet addresses that will be used as pools and the ninth parameter is the initial balance for the first five default pools.
-
-Blockcert Alt-Coin is the current Blockcert Token smart contract implementation.  The alt-coin version allows the owner of the alt-coin to define as many pools of coin distribution as the client want.  The owner can also define when a certain pool of coin distribution will become active.
-
-A number of functions have been added to the Alt-Coin contract that gives the alt-coin owner more control.  These functions will allow the contract owner to add future pools.  There are functions that the owner can call to get information of current pools in the contract as well as functions that return information about the Alt-Coin itself.
-
+Constructor requires 14 parameters: version number of the alt coin smart contract, name of the company that owns the migrated Blockcert Alt-Coin, symbol for the alt-coin.  The alt-coin smart contract requires five wallet addresses that will be used as pools, next parameter is the overall total supply of the alt-coin.  The remaining 5 parameters are initial balances for each pool.  The initial pool balances should equate to the total supply.
 
 #Developer API Key for development purposes
 
@@ -53,7 +48,7 @@ apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
                 altCoinInstance.getAltCoinInfo.call() //you should get an output of the alt coin info passed from the constructor
 
 #JDevAltCoin Pragma5
-trulle version 5 is installed locally.  Local Truffle commands is located in based directory:
+truffle version 5 is installed locally.  Local Truffle commands is located in based directory:
         ./node_modules/truffle/build/cli.bundled.js
 To migrate using local Truffle:  ./node_modules/truffle/build/cli.bundled.js migrate --compile-all --reset --network ganache_ui
 

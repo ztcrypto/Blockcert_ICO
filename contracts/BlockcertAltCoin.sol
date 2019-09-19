@@ -17,7 +17,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 
 	uint8 public decimals = 0;
 
-    uint256 public totalSupply = 2100000000;
+    uint256 public totalSupply = 0;
 
 	mapping (address => uint256) public balanceOf;
     
@@ -41,6 +41,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         name = _name;
         symbol = _symbol;
         
+		totalSupply = _totalSupply;
         balanceOf[msg.sender] = _totalSupply;
 		emit Transfer(this, msg.sender, _totalSupply);
 

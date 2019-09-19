@@ -3,6 +3,7 @@ var BlockcertAltCoin = artifacts.require("BlockcertAltCoin");
 const utils = require('./helpers/Utils');
 const BigNumber = require('bignumber.js');
 var Web3 = require("web3");
+const truffleAssert = require('truffle-assertions');
 
 contract('BlockcertAltCoin', function(accounts) {
     const hostPort = '8545';
@@ -33,6 +34,9 @@ contract('BlockcertAltCoin', function(accounts) {
         console.log("\t\t[ Pool F address:: " + addressF + " ]");
         console.log("\t\t[ Crowd Sale address:: " + crowdSaleAddress + " ]");
         assert(blockcertAltCoin !== undefined, 'has no BlockcertAltCoin instance');
+        /*truffleAssert.eventEmitted(result, 'PoolCreated', (ev) => {
+            return ev.param1 === addressB && ev.param2 === 1000000;
+        });*/
 
     }).timeout(100000);
 

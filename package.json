@@ -24,6 +24,7 @@
     "scrypt": "^6.0.3",
     "solc": "^0.4.24",
     "truffle": "^4.1.12",
+    "truffle-assertions": "^0.9.1",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.1",
     "web3-provider-engine": "^15.0.3",

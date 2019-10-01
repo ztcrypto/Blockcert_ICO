@@ -1,9 +1,9 @@
 pragma solidity ^0.4.24;
 
 
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Utils.sol';
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol';
-import '/Users/jaypersanchez/BlockCerts_ICO/contracts/Owned.sol';
+import './Utils.sol';
+import './interfaces/IERC20Token.sol';
+import './Owned.sol';
 
 /**
     ERC20 Standard Token implementation

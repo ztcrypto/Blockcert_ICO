@@ -33,13 +33,13 @@ module.exports = function(deployer, network, accounts) {
 
   var effectiveTime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * (365 + 1));// (in the future a year and a day)
   
-  ropstenCoinbase = '0xB4974728A226702dA7d9a6B9892699aC917D82cF';
-  poolA = '0x13ce8E47301da01484d04a5952253FEa219956E0';
-  poolB = '0xd49253410da24213Abd43cFE5EE5EcE56e67AA6A';
-  poolC = '0x3CE6dDA8f6C992421c96e462909743A93197Da44';
-  poolD = '0xE177d75A410c2644633540613726825F9e8330E6';
-  poolE = '0xCEa5e0522f4A6427570f7EBC38eDA7090a85459A';
-  crowdSaleAccount = '0xfb414Aa755e6ddB1bbFcD02955e187C111FaAf8B';
+  ropstenCoinbase = '0xC60359daC074Aa430acaFC34CB32a21404c887e2';
+  poolA = '0x0e1cbc0fbab7df944ac98b6a535dbee8541c2c68';
+  poolB = '0x3d819f0a4abd405cfe0af18f203b0ba40b7eb519';
+  poolC = '0x4c521ff297f028fc4d9a1a930ac39cb14f9da940';
+  poolD = '0x350dd21db3cdf1b8022498cecae8a04194c4ac17';
+  poolE = '0xe713e173083e089d49ba931d151d412027721922';
+  crowdSaleAccount = '0x043f375048Cb813A5eaf29367f8128A428e6856F';
   totalSupply = 2100000000;
 
   deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );

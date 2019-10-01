@@ -40,6 +40,22 @@ contract('BlockcertAltCoin', function(accounts) {
 
     }).timeout(100000);
 
+    it("should have Alt Coin info", async() => {
+        let altCoinInfo = await blockcertAltCoin.getAltCoinInfo.call();
+        console.log("\t\t[Alt Coin Info:: " + altCoinInfo[0] + "::" + altCoinInfo[1] + "::" + altCoinInfo[2] + " ]");
+        assert.equal(altCoinInfo[0], standard, "Standard Version not the same");
+        assert.equal(altCoinInfo[1], name, "Alt Coin name not the same");
+        assert.equal(altCoinInfo[2], symbol, "Alt Coin symbol not the same");
+    }).timeout(100000);
+
+
+    it("should have balance", async() => {
+        let altCoinBalance = await blockcertAltCoin.getPoolBalance.call(addressB);
+        console.log("\t\t[ altCoinBalance:: " + altCoinBalance + " ]");
+        assert.equal(altCoinBalance,1000000,"Initial balance amount incorrect");
+    }).timeout(100000);
+
+
     it('verifies the balances after a transfer', async () => {
         let beforeTransferFromBalance = await web3.eth.getBalance(accounts[0]);
         let beforeTransferToBalance = await blockcertAltCoin.balanceOf.call(addressF);

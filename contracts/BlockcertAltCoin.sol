@@ -37,6 +37,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	*/
     constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _totalSupply, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
 
+		Owned.owner = msg.sender;
         standard = _standard;
         name = _name;
         symbol = _symbol;
@@ -65,6 +66,15 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         emit Transfer(this, _poolE, _poolEBalance);
         emit PoolCreated(_poolE, _poolEBalance, now);
 	}
+
+	function getPoolBalance(address _poolAddress) returns(uint256) {
+		require(owner == msg.sender);
+		return balanceOf[_poolAddress];
+	}
+
+	function getAltCoinInfo() public returns(string, string, string) {
+        return(standard, name, symbol);
+    }
 
 	/**
 		@dev send coins from contract owner(msg.sender) total supply to the pool address indicated in the parameter

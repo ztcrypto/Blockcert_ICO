@@ -20,6 +20,7 @@
     "bignumber.js": "^5.0.0",
     "bip39": "^3.0.2",
     "ethereumjs-wallet": "^0.6.3",
+    "mongodb": "^3.3.2",
     "openzeppelin-solidity": "2.3.0",
     "scrypt": "^6.0.3",
     "solc": "^0.4.24",

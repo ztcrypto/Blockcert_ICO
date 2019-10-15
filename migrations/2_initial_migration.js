@@ -18,7 +18,7 @@ module.exports = function(deployer, network, accounts) {
   '0x22c1906ef44f36d789946c1e185efbd3abe3dab9',
   '0x1c6fb34ab5a588834fe875440af71cbd376a9b81'];
   var standard = "0.1Alpha";
-  var name = "ACME Alt Coin";
+  var name = "ACME Alt Coin BCBC";
   var symbol = "ACME"
   defaultAccount = accounts[3];
 
@@ -27,7 +27,7 @@ module.exports = function(deployer, network, accounts) {
             web3 = new Web3(web3.currentProvider);
         } else {
             // set the provider you want from Web3.providers
-            web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+            web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
         }
   }
 
@@ -47,4 +47,5 @@ module.exports = function(deployer, network, accounts) {
   deployer.deploy(Debug);
   deployer.deploy(Owned);
   deployer.deploy(Utils);
+  //deployer.deploy(TestContract,["0xC60359daC074Aa430acaFC34CB32a21404c887e2","0x0e1cbc0fbab7df944ac98b6a535dbee8541c2c68"]);
 };

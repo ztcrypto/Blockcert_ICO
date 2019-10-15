@@ -1,9 +1,13 @@
-pragma solidity ^0.4.24;
-
+pragma solidity ^0.4.24 <0.6.0;
 
 import './Utils.sol';
 import './interfaces/IERC20Token.sol';
 import './Owned.sol';
+
+
+/*import './Utils.sol';
+import './interfaces/IERC20Token.sol';
+import './Owned.sol';*/
 
 /**
     ERC20 Standard Token implementation

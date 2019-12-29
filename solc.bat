@@ -1,0 +1,1 @@
+node .\node_modules\truffle\node_modules\solc\solcjs %1

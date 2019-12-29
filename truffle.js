@@ -17,5 +17,10 @@ module.exports = {
 	},
 	mocha: {
 		useColors: true
-	}
+	},
+	compilers: {
+		solc: {
+		  version: "0.4.24"
+		}
+	  }
 };

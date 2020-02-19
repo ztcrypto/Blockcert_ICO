@@ -5,10 +5,6 @@ import './interfaces/IERC20Token.sol';
 import './Owned.sol';
 
 
-/*import './Utils.sol';
-import './interfaces/IERC20Token.sol';
-import './Owned.sol';*/
-
 /**
     ERC20 Standard Token implementation
 */
@@ -39,7 +35,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	*	dev constructor
 	*   Current pragma version throws compile error with more than 9 parameters.  Currently unable *   to pass arrays of Pool addresses from 2_initial_migration file.  
 	*/
-    constructor (string _standard, string _name, string _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _totalSupply, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
+    constructor (string memory _standard, string memory _name, string memory _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _totalSupply, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
 
 		Owned.owner = msg.sender;
         standard = _standard;
@@ -48,26 +44,27 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         
 		totalSupply = _totalSupply;
         balanceOf[msg.sender] = _totalSupply;
-		emit Transfer(this, msg.sender, _totalSupply);
+
+		emit Transfer(address(this), msg.sender, _totalSupply);
 
 		transfer(_poolA, _poolABalance);
-        emit Transfer(this, _poolA, _poolABalance);
+        emit Transfer(address(this), _poolA, _poolABalance);
         emit PoolCreated(_poolA, _poolABalance, now);
 		
         transfer(_poolB, _poolBBalance);
-        emit Transfer(this, _poolB, _poolBBalance);
+        emit Transfer(address(this), _poolB, _poolBBalance);
         emit PoolCreated(_poolB, _poolBBalance, now);
 		
         transfer(_poolC, _poolCBalance);
-        emit Transfer(this, _poolC, _poolCBalance);
+        emit Transfer(address(this), _poolC, _poolCBalance);
         emit PoolCreated(_poolC, _poolCBalance, now);
 
 		transfer(_poolD, _poolDBalance);
-        emit Transfer(this, _poolD, _poolDBalance);
+        emit Transfer(address(this), _poolD, _poolDBalance);
         emit PoolCreated(_poolD, _poolDBalance, now);
 
         transfer(_poolE, _poolEBalance);
-        emit Transfer(this, _poolE, _poolEBalance);
+        emit Transfer(address(this), _poolE, _poolEBalance);
         emit PoolCreated(_poolE, _poolEBalance, now);
 	}
 
@@ -163,7 +160,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 		balanceOf[_from] = safeSub(balanceOf[_from], _amount);
 		//totalSupply = safeSub(totalSupply, _amount);
 
-        emit Transfer(_from, this, _amount);
+        emit Transfer(_from, address(this), _amount);
 	}
 
     /**
@@ -196,8 +193,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
     */
     function mint(address _to, uint256 _amount) public ownerOnly returns (bool success) {
         balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
-        balanceOf[this] = safeSub(balanceOf[this], _amount);
-        emit Transfer(this, _to, _amount);
+        balanceOf[address(this)] = safeSub(balanceOf[address(this)], _amount);
+        emit Transfer(address(this), _to, _amount);
         //totalSupply = safeAdd(totalSupply, _amount);
         return true;
     }
@@ -216,8 +213,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
     returns (bool success)
     {
         balanceOf[_from] = safeSub(balanceOf[_from], _amount);
-        balanceOf[this] = safeAdd(balanceOf[this], _amount);
-        emit Transfer(_from, this, _amount);
+        balanceOf[address(this)] = safeAdd(balanceOf[address(this)], _amount);
+        emit Transfer(_from, address(this), _amount);
         emit Convert(_from, _blockcertsAddress, _amount);
         //totalSupply = safeSub(totalSupply, _amount);
         return true;

@@ -13,6 +13,7 @@
         e.	Tie to BCBC Digital Wallet 
 2.	Work with James (and Parshanth) to determine the set-up of the BCBC Nodes on the Linux     Servers
 
+<<<<<<< HEAD
 ## Usecase Diagram
 
 <img src="./Blockcert Alt-Coin Deployment Sequence.png" width="500">
@@ -20,6 +21,17 @@
 
 #Blockcert Alt Coin Usage
 Constructor requires 14 parameters: version number of the alt coin smart contract, name of the company that owns the migrated Blockcert Alt-Coin, symbol for the alt-coin.  The alt-coin smart contract requires five wallet addresses that will be used as pools, next parameter is the overall total supply of the alt-coin.  The remaining 5 parameters are initial balances for each pool.  The initial pool balances should equate to the total supply.
+=======
+#Client Package Diagram Flow
+
+#Blockcert Alt Coin Usage
+Constructor requires nine parameters: version number of the alt coin smart contract, name of the company that owns the migrated Blockcert Alt-Coin, symbol for the alt-coin.  The alt-coin smart contract requires five wallet addresses that will be used as pools and the ninth parameter is the initial balance for the first five default pools.
+
+Blockcert Alt-Coin is the current Blockcert Token smart contract implementation.  The alt-coin version allows the owner of the alt-coin to define as many pools of coin distribution as the client want.  The owner can also define when a certain pool of coin distribution will become active.
+
+A number of functions have been added to the Alt-Coin contract that gives the alt-coin owner more control.  These functions will allow the contract owner to add future pools.  There are functions that the owner can call to get information of current pools in the contract as well as functions that return information about the Alt-Coin itself.
+
+>>>>>>> 5fd8a2f6bc91a2f10667e37b6b9f8107c35230f0
 
 #Developer API Key for development purposes
 
@@ -34,8 +46,13 @@ Private Key: 678bd406de816db51a3ca2f132053aadbe6b7ed984b3bde244800b88fe610c80
 apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
 
 #Deploy contract and interface with alt coin in Geth
+<<<<<<< HEAD
 1. Must get both ABI and Binary of contract.  Use solc command. Change directory to BlockCerts_ICO
         solc -o ./AbiBin --bin --abi ./contracts/BlockcertAltCoin.sol ./contracts/Utils.sol ./contracts/interfaces/IERC20Token.sol ./contracts/Owned.sol ./contracts/interfaces/IOwned.sol
+=======
+1. Must get both ABI and Binary of contract.  Use solc command
+        solc -o ../AbiBin --bin --abi ./BlockcertAltCoin.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/Utils.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/Owned.sol /Users/jaypersanchez/BlockCerts_ICO/contracts/interfaces/IOwned.sol
+>>>>>>> 5fd8a2f6bc91a2f10667e37b6b9f8107c35230f0
 2. Clone https://gitlab.1to1core.com/1to1core/blockcerts-smart-contracts
         i. Copy content from the ABI output and paste in the the ABI.js
         ii. Copy content from BIN output and paste in the ByteCode.js file
@@ -47,14 +64,38 @@ apiKey: CBD21B31-FE54-4459-8BB9-75E31CF3DB31
                 var altCoinInstance = BlockcertAltCoin.at(<paste the contract deployed address>)
                 altCoinInstance.getAltCoinInfo.call() //you should get an output of the alt coin info passed from the constructor
 
+<<<<<<< HEAD
 #MongoDB
 * Install mongodb: npm install mongodb
 
 
 #JDevAltCoin Pragma5
 truffle version 5 is installed locally.  Local Truffle commands is located in based directory:
+=======
+#JDevAltCoin Pragma5
+trulle version 5 is installed locally.  Local Truffle commands is located in based directory:
+>>>>>>> 5fd8a2f6bc91a2f10667e37b6b9f8107c35230f0
         ./node_modules/truffle/build/cli.bundled.js
 To migrate using local Truffle:  ./node_modules/truffle/build/cli.bundled.js migrate --compile-all --reset --network ganache_ui
 
 
+<<<<<<< HEAD
+=======
+#Pragma5 Compile Error Changes
+* the address reference of "this" needed to be explicitly converted to address data type with syntax address(this)
+* Pragma line required to change to: pragma solidity ^0.5.11;
+* Required to enable the ABI v2 Coder: pragma experimental ABIEncoderV2;
+* Previous declaration errors from interface contracts:
+        /Users/jaypersanchez/blockcerts_pragma5/BlockCerts_ICO/contracts/BlockcertAltCoin.sol:15:2: DeclarationError: Identifier already declared.
+        string public name;
+        ^----------------^
+        
+        "/blockcerts_pragma5/BlockCerts_ICO/contracts/interfaces/IERC20Token.sol:8:5: The previous declaration is here:
+    function name() public pure returns (string memory) {}"
+    ^----------------------------------------------------^
+* /blockcerts_pragma5/BlockCerts_ICO/contracts/Converter.sol:24:9: TypeError: "send" and "transfer" are only available for objects      of type "address payable", not "address".
+        _to.transfer(_value);
+        ^----------^
+
+>>>>>>> 5fd8a2f6bc91a2f10667e37b6b9f8107c35230f0
 

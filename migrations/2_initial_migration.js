@@ -1,4 +1,5 @@
 var BlockcertAltCoin = artifacts.require("BlockcertAltCoin.sol");
+var BCertin = artifacts.require("BCertin.sol");
 var CrowdSale = artifacts.require("CrowdSale.sol");
 var Debug = artifacts.require("Debug.sol");
 var Owned = artifacts.require("Owned.sol");
@@ -32,6 +33,13 @@ module.exports = function(deployer, network, accounts) {
   }
 
   var effectiveTime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * (365 + 1));// (in the future a year and a day)
+
+  BCertinpoolA = '0x76806a27762dbde692917559b7f40d6724f1d0f5';
+  BCertinpoolB = '0x67af1ebedadab465eece980571c442f7cf3d5790';
+  BCertinpoolC = '0x1d6d2a6d401a06391d327aea6070c3ce3aec4d82';
+  BCertinpoolD = '0x9665889b1b271fecd1d4da4330a3f6ad3d75772c';
+  BCertinpoolE = '0x82914f9b5a9cde7d8e06aa8a92444e896ec50bf8';
+
   
   ropstenCoinbase = '0xC60359daC074Aa430acaFC34CB32a21404c887e2';
   poolA = '0x0e1cbc0fbab7df944ac98b6a535dbee8541c2c68';
@@ -43,6 +51,7 @@ module.exports = function(deployer, network, accounts) {
   totalSupply = 2100000000;
 
   deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+  deployer.deploy(BCertin, standard, name, symbol, BCertinpoolA, BCertinpoolB, BCertinpoolC, BCertinpoolD, BCertinpoolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   deployer.deploy(CrowdSale,crowdSaleAccount);
   deployer.deploy(Debug);
   deployer.deploy(Owned);

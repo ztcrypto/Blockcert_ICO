@@ -14,10 +14,6 @@ module.exports = function(deployer, network, accounts) {
   */
 
   var web3;
-  const addressPools = ['0x0f5baf1c615da9e83df25518e2bbe4e21f873ea5',
-  '0xae9f43d4ffb2bc797634b8c89dbc9288dc2aaa00',
-  '0x22c1906ef44f36d789946c1e185efbd3abe3dab9',
-  '0x1c6fb34ab5a588834fe875440af71cbd376a9b81'];
   var standard = "0.1Alpha";
   var name = "ACME Alt Coin BCBC";
   var symbol = "ACME"
@@ -34,27 +30,36 @@ module.exports = function(deployer, network, accounts) {
 
   var effectiveTime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * (365 + 1));// (in the future a year and a day)
 
-  BCertinpoolA = '0x76806a27762dbde692917559b7f40d6724f1d0f5';
-  BCertinpoolB = '0x67af1ebedadab465eece980571c442f7cf3d5790';
-  BCertinpoolC = '0x1d6d2a6d401a06391d327aea6070c3ce3aec4d82';
-  BCertinpoolD = '0x9665889b1b271fecd1d4da4330a3f6ad3d75772c';
-  BCertinpoolE = '0x82914f9b5a9cde7d8e06aa8a92444e896ec50bf8';
+  //For BlockcertAltCoin
+  /*BCertinpoolA = '0xEf676be27d61B66DCA9e44edAB51551DAC3C07Ba';
+  BCertinpoolB = '0x86CAC31a4B144C55466e2114DABd1889B6abc1BE';
+  BCertinpoolC = '0x11332F4bD14e6b590C0cAB4562D5DA89A540B806';
+  BCertinpoolD = '0x5198C54D4dE9A8B1edeAc9551E5c80923EdE8584';
+  BCertinpoolE = '0x776d90Bcc595d9B9c244715aDeE07e45Cee6576C';*/
 
-  
+  BCertinpoolA = accounts[1];
+  BCertinpoolB = accounts[2];
+  BCertinpoolC = accounts[3];
+  BCertinpoolD = accounts[4];
+  BCertinpoolE = accounts[5]
+
   ropstenCoinbase = '0xC60359daC074Aa430acaFC34CB32a21404c887e2';
-  poolA = '0x0e1cbc0fbab7df944ac98b6a535dbee8541c2c68';
-  poolB = '0x3d819f0a4abd405cfe0af18f203b0ba40b7eb519';
-  poolC = '0x4c521ff297f028fc4d9a1a930ac39cb14f9da940';
-  poolD = '0x350dd21db3cdf1b8022498cecae8a04194c4ac17';
-  poolE = '0xe713e173083e089d49ba931d151d412027721922';
+
+  //For BCertin
+  poolA = '0xEf676be27d61B66DCA9e44edAB51551DAC3C07Ba';
+  poolB = '0x86CAC31a4B144C55466e2114DABd1889B6abc1BE';
+  poolC = '0x11332F4bD14e6b590C0cAB4562D5DA89A540B806';
+  poolD = '0x5198C54D4dE9A8B1edeAc9551E5c80923EdE8584';
+  poolE = '0x776d90Bcc595d9B9c244715aDeE07e45Cee6576C';
+
   crowdSaleAccount = '0x043f375048Cb813A5eaf29367f8128A428e6856F';
   totalSupply = 2100000000;
 
   deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
-  deployer.deploy(BCertin, standard, name, symbol, BCertinpoolA, BCertinpoolB, BCertinpoolC, BCertinpoolD, BCertinpoolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+  //deployer.deploy(BCertin, standard, name, symbol, BCertinpoolA, BCertinpoolB, BCertinpoolC, BCertinpoolD, BCertinpoolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   deployer.deploy(CrowdSale,crowdSaleAccount);
   deployer.deploy(Debug);
   deployer.deploy(Owned);
   deployer.deploy(Utils);
-  //deployer.deploy(TestContract,["0xC60359daC074Aa430acaFC34CB32a21404c887e2","0x0e1cbc0fbab7df944ac98b6a535dbee8541c2c68"]);
+  
 };

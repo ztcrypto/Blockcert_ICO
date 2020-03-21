@@ -1,5 +1,5 @@
 // Specifically request abstractions
-var BlockcertAltCoin = artifacts.require("BlockcertAltCoin");
+var BCertin = artifacts.require("BCertin");
 const utils = require('./helpers/Utils');
 //const BigNumber = require('bignumber.js');
 var Web3 = require("web3");
@@ -13,8 +13,8 @@ contract('BlockcertAltCoin', function(accounts) {
     var addressF = accounts[5];
     var crowdSaleAddress = accounts[6];
     var standard = "0.1Alpha";
-    var name = "ACME Alt Coin";
-    var symbol = "ACME"
+    var name = "BCertin Alt Coin";
+    var symbol = "BCertin"
     var poolInitialBalance = 500000000;
     const ownerBalance = 430860000;
     const totalSupply = 2100000000;
@@ -27,7 +27,7 @@ contract('BlockcertAltCoin', function(accounts) {
     }).timeout(100000)
 
     it("should have Blockcert Alt Coin new context", async() => {
-        let altCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+        let altCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         assert(altCoin !== undefined, 'has no BlockcertAltCoin instance');
     }).timeout(100000);
 
@@ -42,14 +42,14 @@ contract('BlockcertAltCoin', function(accounts) {
     }).timeout(100000);*/
 
     it("should have balance", async() => {
-        let altCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+        let altCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         altCoinBalance = (await altCoin.getPoolBalance.call( addressB )).toNumber();
         assert.isAbove(altCoinBalance, 0, addressB + " is greater than 0");
     }).timeout(100000);
 
 
     it('verifies the balances after a transfer', async () => {
-        let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+        let blockcertAltCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         let contractOwnerCoinbaseBalance = await web3.eth.getBalance(accounts[0]);
         let transferToBalance = await blockcertAltCoin.balanceOf.call(addressF);
         console.log("\t\t[ Coinbase WEI Balance::ETH " + web3.utils.fromWei(contractOwnerCoinbaseBalance,"ether") + "::" + transferToBalance );
@@ -63,14 +63,14 @@ contract('BlockcertAltCoin', function(accounts) {
 
     
     it('verifies that a transfer fires a Transfer event', async () => {
-        let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+        let blockcertAltCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         let res = await blockcertAltCoin.transfer(addressF, 500);
         assert(res.logs.length > 0 && res.logs[0].event == 'Transfer');
     }).timeout(100000);
 
     it('should throw when attempting to transfer more than the balance', async () => {
         try {
-            let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+            let blockcertAltCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
             console.log(await blockcertAltCoin.balanceOf.call(addressF) + "::" + await web3.eth.getBalance(accounts[0]));
             
             let transferAmount = await web3.eth.getBalance(accounts[0]) + 10;
@@ -84,7 +84,7 @@ contract('BlockcertAltCoin', function(accounts) {
     }).timeout(100000);
 
     it("Should be able to transfer between Pool Accounts", async () => {
-        let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+        let blockcertAltCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         let addressB_balanceB = await blockcertAltCoin.balanceOf.call(addressB);
         let addressC_balanceB = await blockcertAltCoin.balanceOf.call(addressC)
         console.log( "Balance Before Transfer :: " + addressB_balanceB );

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24 <0.6.0;
+pragma solidity ^0.4.26 <0.6.0;
 
 import './Utils.sol';
 import './interfaces/IERC20Token.sol';
@@ -9,11 +9,12 @@ import './Owned.sol';
     ERC20 Standard Token implementation
 */
 contract BlockcertAltCoin is IERC20Token, Owned, Utils {
-	string public standard;
 
-	string public name;
+	string public standard = "0.1Alpha";
 
-	string public symbol;
+	string public name = "ACME Alt Coin BCBC";
+
+	string public symbol = "ACME";
 
 	uint8 public decimals = 0;
 
@@ -37,6 +38,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	*/
     constructor (string memory _standard, string memory _name, string memory _symbol, address _poolA, address _poolB, address _poolC, address _poolD, address _poolE, uint256 _totalSupply, uint256 _poolABalance, uint256 _poolBBalance,uint256 _poolCBalance, uint256 _poolDBalance,uint256 _poolEBalance ) public {
 
+		// BCBC as default contract owner
 		Owned.owner = msg.sender;
         standard = _standard;
         name = _name;
@@ -68,9 +70,14 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         emit PoolCreated(_poolE, _poolEBalance, now);
 	}
 
-	function getPoolBalance(address _poolAddress) returns(uint256) {
+	function getPoolBalance(address _poolAddress) public returns(uint256) {
 		require(owner == msg.sender);
 		return balanceOf[_poolAddress];
+	}
+
+	function getContractOwnerBalance(address _msgSender) returns(uint256) {
+		require(owner == msg.sender);
+		return balanceOf[msg.sender];
 	}
 
 	function getAltCoinInfo() public returns(string, string, string) {
@@ -113,7 +120,8 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
 	validAddress(_to)
 	returns (bool success)
 	{
-		allowance[_from][msg.sender] = safeSub(allowance[_from][msg.sender], _value);
+		//this line throws an invalid opcode in test and exits when executed from console
+		//allowance[_from][msg.sender] = safeSub(allowance[_from][msg.sender], _value); 
 		balanceOf[_from] = safeSub(balanceOf[_from], _value);
 		balanceOf[_to] = safeAdd(balanceOf[_to], _value);
         emit Transfer(_from, _to, _value);

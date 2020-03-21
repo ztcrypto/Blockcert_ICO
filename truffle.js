@@ -60,10 +60,9 @@ module.exports = {
 	mocha: {
 		useColors: true
 	},
-<<<<<<< HEAD
-	/*compilers: {
+	compilers: {
 		solc: {
-		   version: "0.5.7",    // Fetch exact version from solc-bin (default: truffle's version)
+		   version: "0.4.26",    // Fetch exact version from solc-bin (default: truffle's version)
 		  // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
 		  // settings: {          // See the solidity docs for advice about optimization and evmVersion
 		  //  optimizer: {
@@ -73,12 +72,5 @@ module.exports = {
 		  //  evmVersion: "byzantium"
 		  // }
 		}
-	}*/
-=======
-	compilers: {
-		solc: {
-		  version: "0.4.24"
-		}
-	  }
->>>>>>> 5fd8a2f6bc91a2f10667e37b6b9f8107c35230f0
+	}
 };

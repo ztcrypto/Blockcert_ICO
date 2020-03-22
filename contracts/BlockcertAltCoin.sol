@@ -4,7 +4,6 @@ import './Utils.sol';
 import './interfaces/IERC20Token.sol';
 import './Owned.sol';
 
-
 /**
     ERC20 Standard Token implementation
 */

@@ -1,5 +1,5 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
-var mnemonic = "flee sadness churn mixture harbor hurry helmet grid valve frame seat voice";
+var mnemonic = "circle memory ice swing excuse sheriff borrow stereo volume artwork broom hundred";
 
 module.exports = {
 	networks: {
@@ -20,7 +20,7 @@ module.exports = {
 		},
 		infura_ropsten: {
 			provider: function() {
-				return new HDWalletProvider(mnemonic,"https://ropsten.infura.io/v3/71cd22f7eea74abc8a7b4fafabbfffea", 0);
+				return new HDWalletProvider(mnemonic,"https://rinkeby.infura.io/v3/71cd22f7eea74abc8a7b4fafabbfffea");
 			},
 			network_id: 3,
 			gas: 4698712,

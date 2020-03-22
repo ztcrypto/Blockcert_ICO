@@ -92,3 +92,10 @@ truffle(ganache_cli)> (await script.getContractOwnerBalance.call(script.address)
 2085000000
 truffle(ganache_cli)> await script.transferFrom('0xEf676be27d61B66DCA9e44edAB51551DAC3C07Ba', '0x86CAC31a4B144C55466e2114DABd1889B6abc1BE',525)
 
+
+### Setup for Infura on Ropsten Network 
+
+1. Install Metamask in Chrome
+2. Go to https://faucet.metamask.io and choose "request 1 ether from faucet".  Follow instruction here on how to get 1 Ether to test, https://blog.bankex.org/how-to-buy-ethereum-using-metamask-ccea0703daec
+
+

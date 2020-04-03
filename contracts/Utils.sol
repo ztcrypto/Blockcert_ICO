@@ -16,6 +16,12 @@ contract Utils {
         _;
     }
 
+    // validate if the amount to be withdrawn is less than the source balance
+    modifier checkAvailableBalance(uint256 _sourceBalance, uint256 _withdrawAmount) {
+        require(_withdrawAmount < _sourceBalance);
+        _;
+    }
+
     // validates an address - currently only checks that it isn't null
     modifier validAddress(address _address) {
         require(_address != 0x0);

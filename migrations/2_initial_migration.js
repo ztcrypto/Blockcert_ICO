@@ -56,7 +56,7 @@ module.exports = function(deployer, network, accounts) {
   totalSupply = 2100000000;
 
   deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
-  //deployer.deploy(BCertin, standard, name, symbol, BCertinpoolA, BCertinpoolB, BCertinpoolC, BCertinpoolD, BCertinpoolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+  deployer.deploy(BCertin, standard, name, symbol, BCertinpoolA, BCertinpoolB, BCertinpoolC, BCertinpoolD, BCertinpoolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   deployer.deploy(CrowdSale,crowdSaleAccount);
   deployer.deploy(Debug);
   deployer.deploy(Owned);

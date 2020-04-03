@@ -19,12 +19,12 @@ module.exports = {
 			gasPrice: 200000000000
 		},
 		infura_ropsten: {
-			provider: function() {
-				return new HDWalletProvider(mnemonic,"https://rinkeby.infura.io/v3/71cd22f7eea74abc8a7b4fafabbfffea");
-			},
+			provider: () =>  new HDWalletProvider("circle memory ice swing excuse sheriff borrow stereo volume artwork broom hundred","https://ropsten.infura.io/v3/71cd22f7eea74abc8a7b4fafabbfffea","1eeef2be5b80492fa09ef5875b01cf8a"),
 			network_id: 3,
-			gas: 4698712,
-			gasPrice: 10000000000
+			gas: 4700000,
+			gasPrice: 10000000000,
+			confirmations: 2,
+			skipDryRun:true
 		},
 		ganache_cli: {
 			host: "127.0.0.1",

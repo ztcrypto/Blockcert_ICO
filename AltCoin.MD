@@ -81,7 +81,7 @@ To migrate using local Truffle:  ./node_modules/truffle/build/cli.bundled.js mig
 
 `(await script.getPoolBalance.call(WALLET_ADDRESS)).toNumber()`
 `web3.eth.getBalance(smartcontract.address);`
-`(await script.getContractOwnerBalance.call(script.address)).toNumber()`
+`(await script.getContractOwnerBsalance.call(script.address)).toNumber()`
 
 
 truffle(ganache_cli)> (await script.getPoolBalance.call('0xEf676be27d61B66DCA9e44edAB51551DAC3C07Ba')).toNumber()

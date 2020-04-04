@@ -27,7 +27,8 @@ def getSecuredToken(_username, _password):
     # print just the token element
     #print( jsonData['accessToken'] )
 
-def generateSSO
+def generateSSO(_token):
+    print('Generating SSO')
 
 token = getSecuredToken('Jaypersanchez.team','P@ssw0rd')
-print(token)
+generateSSO(token)

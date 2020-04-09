@@ -9,4 +9,5 @@ contract IOwned {
 
     function transferOwnership(address _newOwner) public;
     function acceptOwnership() public;
+    function getAddress() public returns(address);
 }

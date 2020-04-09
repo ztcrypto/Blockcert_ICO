@@ -11,6 +11,21 @@ module.exports = {
 			gas: 4000000,
 			from: "0xB4974728A226702dA7d9a6B9892699aC917D82cF"
 		},
+		blockcertsnode: {
+			//this is a private Geth node
+			host: "127.0.0.1",
+			port: "8545",
+			network_id: "4224", //defined during creation of private geth node
+			gas: 4700000,
+			from: "0xf6b69ce6ca0f5b4305f3e94434a8851263a104e9" //coinbase account
+		},
+		rinkeby: {
+			host: "localhost",
+			port: 8545,
+			network_id: 4, //rinkeby test network
+			gas: 4000000,
+			from: "0xF601e9Dd5609b118E63C50EE69095Ff94e3A199a"
+		},
 		truffle_develop: {
 			host: "127.0.0.1",
 			port: 9545,

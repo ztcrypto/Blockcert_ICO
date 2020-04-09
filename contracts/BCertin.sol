@@ -68,6 +68,12 @@ contract BCertin is IERC20Token, Owned, Utils {
         emit PoolCreated(_poolE, _poolEBalance, now);
 	}
 
+	// deactivate the contract
+	function kill() public {
+		require(msg.sender == owner);
+		selfdestruct(owner);
+	}
+
 	function getPoolBalance(address _poolAddress) returns(uint256) {
 		require(owner == msg.sender);
 		return balanceOf[_poolAddress];

@@ -44,4 +44,9 @@ contract Owned is IOwned {
 		owner = newOwner;
 		newOwner = 0x0;
 	}
+
+	function getAddress() public returns(address){
+		require(msg.sender == owner);
+		return msg.sender;
+	}
 }

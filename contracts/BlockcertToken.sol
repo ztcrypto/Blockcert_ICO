@@ -180,7 +180,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
         balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
         balanceOf[this] = safeSub(balanceOf[this], _amount);
         emit Transfer(this, _to, _amount);
-//        totalSupply = safeAdd(totalSupply, _amount);
+        totalSupply = safeAdd(totalSupply, _amount);
         return true;
     }
 
@@ -201,7 +201,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
         balanceOf[this] = safeAdd(balanceOf[this], _amount);
         emit Transfer(_from, this, _amount);
         emit Convert(_from, _blockcertsAddress, _amount);
-//        totalSupply = safeSub(totalSupply, _amount);
+        totalSupply = safeSub(totalSupply, _amount);
         return true;
     }
 }

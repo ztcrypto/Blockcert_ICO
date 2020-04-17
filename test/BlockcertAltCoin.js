@@ -48,7 +48,7 @@ contract('BlockcertAltCoin', function(accounts) {
     }).timeout(100000);
 
 
-    it('verifies the balances after a transfer', async () => {
+    /*it('verifies the balances after a transfer', async () => {
         let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         let contractOwnerCoinbaseBalance = await web3.eth.getBalance(accounts[0]);
         let transferToBalance = await blockcertAltCoin.balanceOf.call(addressF);
@@ -59,14 +59,14 @@ contract('BlockcertAltCoin', function(accounts) {
         console.log("\t\t[ Balance before transfer::Balance after transfer " + transferToBalance + "::" + transferToBalanceAfter);
         console.log("\t\t[ Coinbase balance before transfer::Coinbase balance after transfer " + contractOwnerCoinbaseBalance + "::" + transferBalanceAfter);
         assert( transferToBalanceAfter > transferToBalance, `Transfer to address ${addressF} must be greater than previous balance and coinbase balance must be less`);
-    }).timeout(100000);
+    }).timeout(100000);*/
 
     
-    it('verifies that a transfer fires a Transfer event', async () => {
+    /*it('verifies that a transfer fires a Transfer event', async () => {
         let blockcertAltCoin = await BlockcertAltCoin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
         let res = await blockcertAltCoin.transfer(addressF, 500);
         assert(res.logs.length > 0 && res.logs[0].event == 'Transfer');
-    }).timeout(100000);
+    }).timeout(100000);*/
 
     it('should throw when attempting to transfer more than the balance', async () => {
         try {

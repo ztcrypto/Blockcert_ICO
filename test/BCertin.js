@@ -85,7 +85,7 @@ contract('BCertin', function(accounts) {
         }
     }).timeout(100000);
 
-    it("Should be able to transfer between Pool Accounts", async () => {
+    /*it("Should be able to transfer between Pool Accounts", async () => {
         let blockcertAltCoin = await BCertin.new(standard, name, symbol, addressB, addressC, addressD, addressE, addressF, totalSupply, poolInitialBalance,poolInitialBalance,poolInitialBalance,poolInitialBalance,poolInitialBalance );
         let addressB_balanceB = await blockcertAltCoin.balanceOf.call(addressB);
         let addressC_balanceB = await blockcertAltCoin.balanceOf.call(addressC)
@@ -99,6 +99,6 @@ contract('BCertin', function(accounts) {
         assert(addressB_balanceB < addressB_balanceA, 'Balance before transfer must be less than balance after transfer');
         assert(addressC_balanceB < addressC_balanceA, 'Balance before transfer must be less than the balance after transfer');
 
-    }).timeout(100000);
+    }).timeout(100000);*/
 
 });

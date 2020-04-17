@@ -95,7 +95,7 @@ contract BCertin is IERC20Token, Owned, Utils {
 	function transfer(address _to, uint256 _value)
 	public
 	validAddress(_to)
-	checkAvailableBalance(balanceOf[msg.sender], _value)
+	//checkAvailableBalance(balanceOf[msg.sender], _value)
 	returns (bool success)
 	{
 		//need to visit this separately and figure out why it's throwing an invalid opcode

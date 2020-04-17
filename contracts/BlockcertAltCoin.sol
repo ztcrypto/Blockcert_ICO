@@ -202,7 +202,7 @@ contract BlockcertAltCoin is IERC20Token, Owned, Utils {
         balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
         balanceOf[address(this)] = safeSub(balanceOf[address(this)], _amount);
         emit Transfer(address(this), _to, _amount);
-        //totalSupply = safeAdd(totalSupply, _amount);
+        totalSupply = safeAdd(totalSupply, _amount);
         return true;
     }
 

@@ -1,13 +1,16 @@
 var BlockcertAltCoin = artifacts.require("BlockcertAltCoin.sol");
 var BCertin = artifacts.require("BCertin.sol");
 var BCToken = artifacts.require("BlockcertToken.sol");
-var Script = aritifacts.require("Script.sol");
+var Script = artifacts.require("Script.sol");
 var CrowdSale = artifacts.require("CrowdSale.sol");
 var Debug = artifacts.require("Debug.sol");
 var Owned = artifacts.require("Owned.sol");
 var Utils = artifacts.require("Utils.sol");
 var Web3 = require("web3");
+var solc = require('solc');
 var TestContract = artifacts.require("TestContract.sol");
+const path = require('path');
+const fs = require('fs');
 
 module.exports = function(deployer, network, accounts) {
 
@@ -69,5 +72,14 @@ BCBC 10 - "0x8fc0b34ff83c44837c7f284de756e0e6be9b3d94"
   //deployer.deploy(Debug);
   deployer.deploy(Owned);
   deployer.deploy(Utils);
+
+  //ABI
+  const contractPaths = path.resolve(__dirname, '../contracts/');
+  const source = fs.readFileSync(contractPaths, 'UTF-8');
+  console.log( solc.compile(source,1) )
+  
+  //console.log(contractPaths)
+  //console.log( contractPaths.indexOf("migrations") );
+  //console.log( contractPaths.substring(0,36) );
   
 };

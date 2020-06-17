@@ -45,7 +45,7 @@ contract Script is IERC20Token, Owned, Utils {
 
 	}
 
-	function getScriptInfo() public returns(string, string, string) {
+	function getScriptInfo() external returns(string, string, string) {
         return(standard, name, symbol);
     }
 

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.26 <0.6.0;
+pragma solidity ^0.6.0 <0.6.11;
 
 
 import './Utils.sol';
@@ -12,17 +12,17 @@ import './Owned.sol';
 contract BlockcertToken is IERC20Token, Owned, Utils {
 	string public standard = 'Token 0.1';
 
-	string public name = 'BLOCKCERT';
+	string public override name = 'BLOCKCERT';
 
-	string public symbol = 'BCERT';
+	string public override symbol = 'BCERT';
 
-	uint8 public decimals = 0;
+	uint8 public override decimals = 0;
 
-	uint256 public totalSupply = 2100000000;
+	uint256 public override totalSupply = 2100000000;
 
-	mapping (address => uint256) public balanceOf;
+	mapping (address => uint256) public override balanceOf;
 
-	mapping (address => mapping (address => uint256)) public allowance;
+	mapping (address => mapping (address => uint256)) public override allowance;
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
@@ -51,28 +51,28 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		uint treasuryPoolBalance = 859140000;
 
 		balanceOf[msg.sender] = publicSalePoolBalance;
-		emit Transfer(this, msg.sender, publicSalePoolBalance);
+		emit Transfer(address(this), msg.sender, publicSalePoolBalance);
 		balanceOf[_presalePool] = presalePoolBalance;
-        emit Transfer(this, _presalePool, presalePoolBalance);
+        emit Transfer(address(this), _presalePool, presalePoolBalance);
 		balanceOf[_CCTPool] = cctPoolBalance;
-        emit Transfer(this, _CCTPool, cctPoolBalance);
+        emit Transfer(address(this), _CCTPool, cctPoolBalance);
 		balanceOf[_BCIDeveloperPool] = bciDeveloperPoolBalance;
-        emit Transfer(this, _BCIDeveloperPool, bciDeveloperPoolBalance);
+        emit Transfer(address(this), _BCIDeveloperPool, bciDeveloperPoolBalance);
 		balanceOf[_TreasuryPool] = treasuryPoolBalance;
-        emit Transfer(this, _TreasuryPool, treasuryPoolBalance);
+        emit Transfer(address(this), _TreasuryPool, treasuryPoolBalance);
 	}
 
 	/**
-		@dev send coins
+		dev send coins
 		throws on any error rather then return a false flag to minimize user errors
 
-		@param _to      target address
-		@param _value   transfer amount
+		param _to      target address
+		param _value   transfer amount
 
-		@return true if the transfer was successful, false if it wasn't
+		return true if the transfer was successful, false if it wasn't
 	*/
 	function transfer(address _to, uint256 _value)
-	public
+	public override
 	validAddress(_to)
 	returns (bool success)
 	{
@@ -83,17 +83,17 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 	}
 
 	/**
-		@dev an account/contract attempts to get the coins
+		dev an account/contract attempts to get the coins
 		throws on any error rather then return a false flag to minimize user errors
 
-		@param _from    source address
-		@param _to      target address
-		@param _value   transfer amount
+		param _from    source address
+		param _to      target address
+		param _value   transfer amount
 
-		@return true if the transfer was successful, false if it wasn't
+		return true if the transfer was successful, false if it wasn't
 	*/
 	function transferFrom(address _from, address _to, uint256 _value)
-	public
+	public override
 	validAddress(_from)
 	validAddress(_to)
 	returns (bool success)
@@ -106,20 +106,20 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 	}
 
 	/**
-		@dev allow another account/contract to spend some tokens on your behalf
+		dev allow another account/contract to spend some tokens on your behalf
 		throws on any error rather then return a false flag to minimize user errors
 
 		also, to minimize the risk of the approve/transferFrom attack vector
 		(see https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/), approve has to be called twice
 		in 2 separate transactions - once to change the allowance to 0 and secondly to change it to the new allowance value
 
-		@param _spender approved address
-		@param _value   allowance amount
+		param _spender approved address
+		param _value   allowance amount
 
-		@return true if the approval was successful, false if it wasn't
+		return true if the approval was successful, false if it wasn't
 	*/
 	function approve(address _spender, uint256 _value)
-	public
+	public override
 	validAddress(_spender)
 	returns (bool success)
 	{
@@ -145,7 +145,7 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
 		balanceOf[_from] = safeSub(balanceOf[_from], _amount);
 		totalSupply = safeSub(totalSupply, _amount);
 
-        emit Transfer(_from, this, _amount);
+        emit Transfer(_from, address(this), _amount);
 	}
 
     /**
@@ -178,8 +178,8 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     */
     function mint(address _to, uint256 _amount) public ownerOnly returns (bool success) {
         balanceOf[_to] = safeAdd(balanceOf[_to], _amount);
-        balanceOf[this] = safeSub(balanceOf[this], _amount);
-        emit Transfer(this, _to, _amount);
+        balanceOf[address(this)] = safeSub(balanceOf[address(this)], _amount);
+        emit Transfer(address(this), _to, _amount);
         totalSupply = safeAdd(totalSupply, _amount);
         return true;
     }
@@ -198,8 +198,8 @@ contract BlockcertToken is IERC20Token, Owned, Utils {
     returns (bool success)
     {
         balanceOf[_from] = safeSub(balanceOf[_from], _amount);
-        balanceOf[this] = safeAdd(balanceOf[this], _amount);
-        emit Transfer(_from, this, _amount);
+        balanceOf[address(this)] = safeAdd(balanceOf[address(this)], _amount);
+        emit Transfer(_from, address(this), _amount);
         emit Convert(_from, _blockcertsAddress, _amount);
         totalSupply = safeSub(totalSupply, _amount);
         return true;

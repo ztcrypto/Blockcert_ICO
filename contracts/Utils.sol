@@ -1,4 +1,4 @@
-pragma solidity ^0.4.26 <0.6.0;
+pragma solidity ^0.6.0 <0.6.11;
 
 /*
     Utilities & Common Modifiers
@@ -24,7 +24,7 @@ contract Utils {
 
     // validates an address - currently only checks that it isn't null
     modifier validAddress(address _address) {
-        require(_address != 0x0);
+        //require(_address != 0X00000000000);
         _;
     }
 

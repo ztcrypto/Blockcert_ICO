@@ -1,11 +1,12 @@
-pragma solidity ^0.4.26 <0.6.0;
+pragma solidity ^0.6.0 <0.6.11;
+
 import './interfaces/IOwned.sol';
 
 /*
     Provides support and utilities for contract ownership
 */
 contract Owned is IOwned {
-	address public owner;
+	address public override owner;
 	address public newOwner;
 
 	event OwnerUpdate(address _prevOwner, address _newOwner);
@@ -30,7 +31,7 @@ contract Owned is IOwned {
 
 		@param _newOwner    new contract owner
 	*/
-	function transferOwnership(address _newOwner) public ownerOnly {
+	function transferOwnership(address _newOwner) public override ownerOnly {
 		require(_newOwner != owner);
 		newOwner = _newOwner;
 	}
@@ -38,14 +39,14 @@ contract Owned is IOwned {
 	/**
 		@dev used by a new owner to accept an ownership transfer
 	*/
-	function acceptOwnership() public {
+	function acceptOwnership() public override {
 		require(msg.sender == newOwner);
 		emit OwnerUpdate(owner, newOwner);
 		owner = newOwner;
-		newOwner = 0x0;
+		//newOwner = 0x0;
 	}
 
-	function getAddress() public returns(address){
+	function getAddress() public override returns(address){
 		require(msg.sender == owner);
 		return msg.sender;
 	}

@@ -1,8 +1,9 @@
-pragma solidity ^0.4.26 <0.6.0;
+pragma solidity ^0.6.0 <0.6.11;
 
 import './Utils.sol';
 import './interfaces/IERC20Token.sol';
 import './Owned.sol';
+import './interfaces/IOwned.sol';
 
 /**
     ERC20 Standard Token implementation
@@ -11,17 +12,17 @@ contract Script is IERC20Token, Owned, Utils {
 
 	string public standard = "Blockcerts";
 
-	string public name = "Blockcerts";
+	string public override name = "Blockcerts";
 
-	string public symbol = "Script";
+	string public override symbol = "Script";
 
-	uint8 public decimals = 0;
+	uint8 public override decimals = 0;
 
-    uint256 public totalSupply = 100000000; //One hundred million
+    uint256 public override totalSupply = 100000000; //One hundred million
 
-	mapping (address => uint256) public balanceOf;
+	mapping (address => uint256) public override balanceOf;
     
-	mapping (address => mapping (address => uint256)) public allowance;
+	mapping (address => mapping (address => uint256)) public override allowance;
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
@@ -45,21 +46,21 @@ contract Script is IERC20Token, Owned, Utils {
 
 	}
 
-	function getScriptInfo() external returns(string, string, string) {
+	function getScriptInfo() external returns(string memory, string memory, string memory) {
         return(standard, name, symbol);
     }
 
 	/**
-		@dev send coins from contract owner(msg.sender) total supply to the pool address indicated in the parameter
+		dev send coins from contract owner(msg.sender) total supply to the pool address indicated in the parameter
 		throws on any error rather then return a false flag to minimize user errors
 
-		@param _to      target address
-		@param _value   transfer amount
+		param _to      target address
+		param _value   transfer amount
 
-		@return true if the transfer was successful, false if it wasn't
+		return true if the transfer was successful, false if it wasn't
 	*/
 	function transfer(address _to, uint256 _value)
-	public
+	public override
 	validAddress(_to)
 	returns (bool success)
 	{
@@ -70,17 +71,17 @@ contract Script is IERC20Token, Owned, Utils {
 	}
 
 	/**
-		@dev an account/contract attempts to get the coins
+		dev an account/contract attempts to get the coins
 		throws on any error rather then return a false flag to minimize user errors
 
-		@param _from    source address
-		@param _to      target address
-		@param _value   transfer amount
+		param _from    source address
+		param _to      target address
+		param _value   transfer amount
 
-		@return true if the transfer was successful, false if it wasn't
+		return true if the transfer was successful, false if it wasn't
 	*/
 	function transferFrom(address _from, address _to, uint256 _value)
-	public
+	public override
 	validAddress(_from)
 	validAddress(_to)
 	returns (bool success)
@@ -94,20 +95,20 @@ contract Script is IERC20Token, Owned, Utils {
 	}
 
 	/**
-		@dev allow another account/contract to spend some tokens on your behalf
+		dev allow another account/contract to spend some tokens on your behalf
 		throws on any error rather then return a false flag to minimize user errors
 
 		also, to minimize the risk of the approve/transferFrom attack vector
 		(see https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/), approve has to be called twice
 		in 2 separate transactions - once to change the allowance to 0 and secondly to change it to the new allowance value
 
-		@param _spender approved address
-		@param _value   allowance amount
+		param _spender approved address
+		param _value   allowance amount
 
-		@return true if the approval was successful, false if it wasn't
+		return true if the approval was successful, false if it wasn't
 	*/
 	function approve(address _spender, uint256 _value)
-	public
+	public override
 	validAddress(_spender)
 	returns (bool success)
 	{

@@ -37,11 +37,11 @@ module.exports = function(deployer, network, accounts) {
 
   
   //For Blockcert Alt Coin & BCertin
-  poolA = "0x486d653fbbdea081e624e91233679a4a33254ecd";
-  poolB = "0xf97b2fd85e03cc5a6112aab788c56942bb1f6e6b";
-  poolC = "0x5ea7b6cd04b2456c46140bff664608ec8c3e9bb1";
-  poolD = "0xa936c4adc3a36db042812fe831d7a931ccf4d784";
-  poolE = "0x8fc0b34ff83c44837c7f284de756e0e6be9b3d94";
+  poolA = "0x7dF26866de1211b7275EbC2f6B212EFAA64ED323";
+  poolB = "0x9c08D4F4d9a7F436996EBe3ac0142351fDd79664";
+  poolC = "0x35d992a736BEBe2e826C8Aa29ba8556163578f54";
+  poolD = "0xD0b36e27bB7f76F9161566967fc115271F341A8b";
+  poolE = "0xaA6f1bf5E509FF8978F0963671eFdc7eEd6be8bc";
 
 
 /* 
@@ -65,7 +65,7 @@ BCBC 10 - "0x8fc0b34ff83c44837c7f284de756e0e6be9b3d94"
   totalSupply = 2100000000;
 
   deployer.deploy(Script);
-  //deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
+  deployer.deploy(BlockcertAltCoin, standard, name, symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   //deployer.deploy(BCertin, standard, "ACME Alt Coin BCertin", symbol, poolA, poolB, poolC, poolD, poolE, totalSupply, 1000000,2000000,3000000,4000000,5000000 );
   //deployer.deploy(BCToken, "0x486d653fbbdea081e624e91233679a4a33254ecd", "0xf97b2fd85e03cc5a6112aab788c56942bb1f6e6b", "0x5ea7b6cd04b2456c46140bff664608ec8c3e9bb1", "0xa936c4adc3a36db042812fe831d7a931ccf4d784");
   //deployer.deploy(CrowdSale,crowdSaleAccount);

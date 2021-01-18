@@ -1,5 +1,5 @@
 var HDWalletProvider = require('truffle-hdwallet-provider');
-var mnemonic = require('./.mnemonic');
+var mnemonic = require('./mnemonic.json');
 
 module.exports = {
   networks: {

@@ -1,49 +1,38 @@
 {
-	"name": "ico-smart-contracts",
-	"version": "1.0.0",
-	"main": "index.js",
-	"scripts": {
-		"test": "$(npm bin)/truffle test",
-		"compile": "$(npm bin)/truffle compile",
-		"migrate": "$(npm bin)/truffle migrate"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://gitlab.pixelplex.by/611_blockcerts/ico-smart-contracts.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@babel/core": "^7.6.0",
-		"@truffle/hdwallet-provider": "^1.0.18",
-		"bignumber": "^1.1.0",
-		"bignumber.js": "^5.0.0",
-		"bip39": "^3.0.2",
-		"ethereumjs-wallet": "^0.6.3",
-		"ethers": "^4.0.46",
-		"mongodb": "^3.3.2",
-		"openzeppelin-solidity": "2.3.0",
-		"scrypt": "^6.0.3",
-		"solc": "^0.4.24",
-		"truffle": "^4.1.12",
-		"truffle-assertions": "^0.9.1",
-		"truffle-hdwallet-provider": "^1.0.17",
-		"web3": "^1.2.1",
-		"web3-provider-engine": "^15.0.3",
-		"yarn": "^1.17.3"
-	},
-	"directories": {
-		"test": "test"
-	},
-	"devDependencies": {},
-	"keywords": [],
-	"description": "",
-	"openzeppelin-solidity": "2.3.0",
-	"scrypt": "^6.0.3",
-	"solc": "^0.4.24",
-	"truffle": "^5.0.0",
-	"truffle-hdwallet-provider": "^1.0.17",
-	"web3": "^1.2.4",
-	"web3-provider-engine": "^15.0.3",
-	"yarn": "^1.17.3"
+  "name": "ico-smart-contracts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "keywords": [],
+  "description": "",
+  "scripts": {
+    "test": "$(npm bin)/truffle test",
+    "compile": "$(npm bin)/truffle compile",
+    "migrate": "$(npm bin)/truffle migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.pixelplex.by/611_blockcerts/ico-smart-contracts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.6.0",
+    "@openzeppelin/contracts": "^3.3.0",
+    "@truffle/hdwallet-provider": "^1.0.18",
+    "bignumber": "^1.1.0",
+    "bignumber.js": "^5.0.0",
+    "bip39": "^3.0.2",
+    "ethereumjs-wallet": "^0.6.3",
+    "ethers": "^4.0.46",
+    "solc": "^0.4.24",
+    "truffle": "^5.0.0",
+    "truffle-assertions": "^0.9.1",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3": "^1.2.4",
+    "web3-provider-engine": "^15.0.3"
+  },
+  "directories": {
+    "test": "test"
+  }
 }

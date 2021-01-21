@@ -4,15 +4,17 @@ var mnemonic = require('./mnemonic.json');
 module.exports = {
   networks: {
     bcbc_testnet: {
-      /*provider: function() {
-				return new HDWalletProvider(mnemonic,"http://node2.blockcerts.com", 0);
-				http://52.165.174.111:6111/
-			},*/
-      host: 'node2.blockcerts.com',
+      provider: function () {
+        return new HDWalletProvider(
+          'DB206DB4DD74CC1757CEDEBFAA7AE019DAB874A746465D838ED3264E2DF8C0C5',
+          'http://18.217.44.202:6111',
+          0
+        );
+      },
+      host: '18.217.44.202',
       port: 6111,
       network_id: '13',
-      gas: 4000000,
-      from: '0xB4974728A226702dA7d9a6B9892699aC917D82cF',
+      gasPrice: 1,
     },
     live_main: {
       host: '10.1.2.4',

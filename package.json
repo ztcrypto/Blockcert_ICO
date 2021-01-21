@@ -24,7 +24,7 @@
     "bignumber.js": "^5.0.0",
     "bip39": "^3.0.2",
     "ethereumjs-wallet": "^0.6.3",
-    "ethers": "^4.0.46",
+    "ethers": "^4.0.48",
     "solc": "^0.4.24",
     "truffle": "^5.0.0",
     "truffle-assertions": "^0.9.1",

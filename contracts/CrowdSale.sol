@@ -1,14 +1,9 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0;
 
+import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 
-import './Owned.sol';
-import './interfaces/IERC20Token.sol';
-
-// TODO remove before deploy!!!
-import "./Debug.sol";
-
-contract CrowdSale is Owned
-, Debug
+contract CrowdSale is Ownable
 {
 
 	uint constant public softCap = 300000 * 1 ether;
@@ -21,7 +16,7 @@ contract CrowdSale is Owned
 
 	uint public amountRaised;
 
-	IERC20Token public tokenReward;
+	IERC20 public tokenReward;
 
 	mapping (address => uint256) public balanceOf;
 
@@ -37,7 +32,7 @@ contract CrowdSale is Owned
 	 * Setup the owner
 	 */
     constructor (address addressOfTokenUsedAsReward) public {
-		tokenReward = IERC20Token(addressOfTokenUsedAsReward);
+		tokenReward = IERC20(addressOfTokenUsedAsReward);
 	}
 
 	/**
@@ -45,38 +40,38 @@ contract CrowdSale is Owned
 	 *
 	 * The function without name is the default function that is called whenever anyone sends funds to a contract
 	 */
-	function() payable external {
-		require(!crowdSaleClosed);
-		require(!crowdSalePaused);
-		require(startDate <= now);
-		require(endDate >= now);
+	// receive() payable external {
+	// 	require(!crowdSaleClosed);
+	// 	require(!crowdSalePaused);
+	// 	require(startDate <= now);
+	// 	require(endDate >= now);
 
-		uint contractTokenBalance = tokenReward.balanceOf(this);
-		require(contractTokenBalance > 0);
+	// 	uint contractTokenBalance = tokenReward.balanceOf(this);
+	// 	require(contractTokenBalance > 0);
 
-		uint amount = msg.value;
-		uint tokenAmount = amount / price;
+	// 	uint amount = msg.value;
+	// 	uint tokenAmount = amount / price;
 
-		if (tokenAmount > contractTokenBalance) {
-			tokenAmount = contractTokenBalance;
-		}
+	// 	if (tokenAmount > contractTokenBalance) {
+	// 		tokenAmount = contractTokenBalance;
+	// 	}
 
-		amount = tokenAmount * price;
-		if (amount < msg.value) {
-			msg.sender.transfer(msg.value - amount);
-		}
+	// 	amount = tokenAmount * price;
+	// 	if (amount < msg.value) {
+	// 		msg.sender.transfer(msg.value - amount);
+	// 	}
 
-		balanceOf[msg.sender] += amount;
-		amountRaised += amount;
-		tokenReward.transfer(msg.sender, tokenAmount);
-		emit FundTransfer(msg.sender, amount, true);
-	}
+	// 	balanceOf[msg.sender] += amount;
+	// 	amountRaised += amount;
+	// 	tokenReward.transfer(msg.sender, tokenAmount);
+	// 	emit FundTransfer(msg.sender, amount, true);
+	// }
 
 	/**
 		Set or off pause crowdsale
 		@param _pause - true or false (1 or 0)
 	*/
-	function setPauseStatus(bool _pause) external ownerOnly {
+	function setPauseStatus(bool _pause) external onlyOwner {
 		require(amountRaised >= softCap);
 		crowdSalePaused = _pause;
 	}
@@ -85,7 +80,7 @@ contract CrowdSale is Owned
 	/**
 		Close crowdsale
 	*/
-	function closeCrowdsale() external ownerOnly {
+	function closeCrowdsale() external onlyOwner {
 		require(amountRaised >= softCap);
 		crowdSaleClosed = true;
 	}
@@ -97,8 +92,8 @@ contract CrowdSale is Owned
 	 * sends the entire amount to the owner. If goal was not reached, each contributor can withdraw
 	 * the amount they contributed.
 	 */
-	function safeWithdrawal() external ownerOnly {
-		require(crowdSaleClosed || endDate < now || tokenReward.balanceOf(this) == 0);
-		owner.transfer(address(this).balance);
-	}
+	// function safeWithdrawal() external onlyOwner {
+	// 	require(crowdSaleClosed || endDate < now || tokenReward.balanceOf(this) == 0);
+	// 	owner.transfer(address(this).balance);
+	// }
 }

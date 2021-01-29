@@ -1,12 +1,12 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0 <0.6.11;
 
 /*
     Owned contract interface
 */
-contract IOwned {
+interface  IOwned {
     // this function isn't abstract since the compiler emits automatically generated getter functions as external
-    function owner() public constant returns (address) {}
-
-    function transferOwnership(address _newOwner) public;
-    function acceptOwnership() public;
+    function owner() external returns (address);
+    function transferOwnership(address _newOwner) external;
+    function acceptOwnership() external;
+    function getAddress() external returns(address);
 }

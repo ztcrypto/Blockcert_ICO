@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0 <0.6.11;
 
 /*
     Utilities & Common Modifiers
@@ -7,8 +7,8 @@ contract Utils {
     /**
         constructor
     */
-    constructor () public {
-    }
+    /*constructor () public {
+    }*/
 
     // verifies that an amount is greater than zero
     modifier greaterThanZero(uint256 _amount) {
@@ -16,9 +16,15 @@ contract Utils {
         _;
     }
 
+    // validate if the amount to be withdrawn is less than the source balance
+    modifier checkAvailableBalance(uint256 _sourceBalance, uint256 _withdrawAmount) {
+        require(_withdrawAmount < _sourceBalance);
+        _;
+    }
+
     // validates an address - currently only checks that it isn't null
     modifier validAddress(address _address) {
-        require(_address != 0x0);
+        //require(_address != 0X00000000000);
         _;
     }
 
